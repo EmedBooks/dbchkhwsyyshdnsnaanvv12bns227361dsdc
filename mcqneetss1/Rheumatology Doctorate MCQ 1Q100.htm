@@ -7,9 +7,8 @@
 <META name="keywords" content="quiz">
 <META name="description" content="Rheumatology NEET SS mock test 1">
 <TITLE>Quiz</TITLE>
-<LINK href="css/Rheumatology Doctorate MCQ 1.css" rel="stylesheet" type="text/css">
+<LINK href="css/Rheumatology Doctorate MCQ 11.css" rel="stylesheet" type="text/css">
 <link href="css/base.css" rel="stylesheet"/>
-<SCRIPT LANGUAGE='JavaScript' SRC='./Rheumatology Doctorate MCQ 1.js'></SCRIPT>
 <link href="css/modalDlg.css" rel="stylesheet"/>
 <link href="css/progressbar.css" rel="stylesheet" />
 <script src="js/progressbar.min.js" type="text/javascript"></script>
@@ -24,7 +23,7 @@ function InitProgressBar()
 }
 function GoNextQuestion()
 {
-  if (valid[99]==0) {
+  if (parent.valid[99]==0) {
     if (window.confirm('Confirm your answer ?')) {
       if (Domanda100()) return 1;
     }
@@ -32,16 +31,11 @@ function GoNextQuestion()
   return 0;
 }
 function EndTestSkip() {
-Constructor();
-RetrieveAllAnswer();
-startFloatLayer();
-RetrieveStatusBar();
-RestartTimer();
-if (end_test==1) {
- if (valid[99]==0) {
-   allAnsReport[99] = new initValuate100();
-   doValuate(99,document.domanda.score100,document.domanda.risposta100);
-   FinalActions();
+if (parent.end_test==1) {
+ if (parent.valid[99]==0) {
+   parent.allAnsReport[99] = new initValuate100();
+   parent.doValuate(99,document.domanda.score100,document.domanda.risposta100);
+   parent.FinalActions();
  }
  }
 }
@@ -50,30 +44,18 @@ function ManageLoadPage()
 EndTestSkip();}
 </script>
 </HEAD>
-<BODY OnLoad="ManageLoadPage()"  Onunload="StoreStatusBar()">
+<BODY OnLoad="ManageLoadPage()" >
 <div style="width:65%; margin:0 auto;">
 <script language="javascript" type="text/javascript">
-  keyword = "E25#s9iAOsz";
+  parent.keyword = "pCQMrMjO";
 </script>
-  <form class="hidden_style"><input type="hidden" id="hidden_url" value="css/Rheumatology Doctorate MCQ 1.css"></form>
+  <form class="hidden_style"><input type="hidden" id="hidden_url" value="css/Rheumatology Doctorate MCQ 11.css"></form>
 <CENTER>
 <SPAN class='quiz_title_class'>Rheumatology NEET SS mock test 1</SPAN><BR>
 </CENTER>
 <HR class='horizontal-bar'>
 <FORM NAME='domanda'>
 
-<TABLE id='FloatingStatusbarPanel' width='95%' style='position:absolute; left:100px; top:-100px; z-index:2;'>
-<TR>
-<TD ALIGN='left' ID='clock' CLASS='floating_statusbar_class'>01:00:00</TD>
-<TD ALIGN='center' CLASS='floating_statusbar_class'>
-correct :<SPAN ID='nRight'>0</SPAN>
-</TD><TD ALIGN='center' CLASS='floating_statusbar_class'>
-wrong :<SPAN ID='nWrong'>0</SPAN>
-</TD><TD ALIGN='center' CLASS='floating_statusbar_class'>
-to be answered :<SPAN ID='nToDo'>100</SPAN>
-</TD></TR></TABLE>
-
-<div id='retire_btn_div'><img alt='Retire' title='Retire' id='retire_btn_img' src='media/btn-close-x.png' OnClick='Retire()'></div>
 <script language="javascript" type="text/javascript">
 function initValuate100()
 {
@@ -82,37 +64,33 @@ function initValuate100()
  if (document.domanda.radio100000.checked==true) choice=1; else choice=0;
  answer = "";
  remark = "";
- valuation = DecodeNumber('WKfrwYQwmhI=',1904,-1,1);
- this[0] = new AnsReport(choice,valuation,remark,0,answer);
+ valuation = parent.DecodeNumber('+CGlURPIR68=',1572,-1,1);
+ this[0] = new parent.AnsReport(choice,valuation,remark,0,answer);
  if (document.domanda.radio100001.checked==true) choice=1; else choice=0;
  answer = "";
  remark = "";
- valuation = DecodeNumber('dKN1zh1LbBU=',1917,-1,1);
- this[1] = new AnsReport(choice,valuation,remark,0,answer);
+ valuation = parent.DecodeNumber('gCxB/uYd00k=',1585,-1,1);
+ this[1] = new parent.AnsReport(choice,valuation,remark,0,answer);
  if (document.domanda.radio100002.checked==true) choice=1; else choice=0;
  answer = "";
  remark = "";
- valuation = DecodeNumber('3w23Wss+LOs=',1930,-1,1);
- this[2] = new AnsReport(choice,valuation,remark,0,answer);
+ valuation = parent.DecodeNumber('6HaO4O5Fosw=',1598,-1,1);
+ this[2] = new parent.AnsReport(choice,valuation,remark,0,answer);
  if (document.domanda.radio100003.checked==true) choice=1; else choice=0;
  answer = "";
  remark = "";
- valuation = DecodeNumber('sNARUgz2FyQ=',1943,-1,1);
- this[3] = new AnsReport(choice,valuation,remark,0,answer);
- pesi[99]=DecodeNumber('F7Gp0m5kIEI=',1946,0,99999);
+ valuation = parent.DecodeNumber('thoumdLn1aI=',1611,-1,1);
+ this[3] = new parent.AnsReport(choice,valuation,remark,0,answer);
+ parent.pesi[99]=parent.DecodeNumber('gzDMqaCJT+s=',1614,0,99999);
 
 }
 
 function Domanda100()
 {
- if ((document.domanda.radio100000.checked==false) && (document.domanda.radio100001.checked==false) && (document.domanda.radio100002.checked==false) && (document.domanda.radio100003.checked==false) )
- { IncompletedQuest(1); return 0; }
- RetrieveAllAnswer();
- if (valid[99]!=0) { DoneBefore(); return; }
- allAnsReport[99] = new initValuate100();
- doValuate(99);
- StoreAnswer(99);
- PrintAnswer(99,99);
+ if (parent.valid[99]!=0) { parent.DoneBefore(); return; }
+ parent.allAnsReport[99] = new initValuate100();
+ parent.doValuate(99);
+ parent.PrintAnswer(99,99);
  return 1;
 }
 
@@ -135,30 +113,32 @@ function Domanda100()
 <TABLE WIDTH='100%'>
 <TR>
 <TD ALIGN='CENTER' class="quiz_letter_class"  WIDTH='50'>
-<SPAN class='quiz_letter_class'> A </SPAN><INPUT TYPE='radio' NAME='radio100000'  OnClick=" document.domanda.radio100001.checked=0; document.domanda.radio100002.checked=0; document.domanda.radio100003.checked=0;Domanda100()" ></TD>
+<SPAN class='quiz_letter_class'> A </SPAN><INPUT TYPE='radio' NAME='radio100000'  OnClick=" document.domanda.radio100001.checked=0; document.domanda.radio100002.checked=0; document.domanda.radio100003.checked=0;" ></TD>
 <TD ALIGN='LEFT' class="quiz_answer_class">
 CD4+CD8+</TD>
 </TR>
 <TR>
 <TD ALIGN='CENTER' class="quiz_letter_class"  WIDTH='50'>
-<SPAN class='quiz_letter_class'> B </SPAN><INPUT TYPE='radio' NAME='radio100001'  OnClick=" document.domanda.radio100000.checked=0; document.domanda.radio100002.checked=0; document.domanda.radio100003.checked=0;Domanda100()" ></TD>
+<SPAN class='quiz_letter_class'> B </SPAN><INPUT TYPE='radio' NAME='radio100001'  OnClick=" document.domanda.radio100000.checked=0; document.domanda.radio100002.checked=0; document.domanda.radio100003.checked=0;" ></TD>
 <TD ALIGN='LEFT' class="quiz_answer_class">
 CD4+CD8–</TD>
 </TR>
 <TR>
 <TD ALIGN='CENTER' class="quiz_letter_class"  WIDTH='50'>
-<SPAN class='quiz_letter_class'> C </SPAN><INPUT TYPE='radio' NAME='radio100002'  OnClick=" document.domanda.radio100000.checked=0; document.domanda.radio100001.checked=0; document.domanda.radio100003.checked=0;Domanda100()" ></TD>
+<SPAN class='quiz_letter_class'> C </SPAN><INPUT TYPE='radio' NAME='radio100002'  OnClick=" document.domanda.radio100000.checked=0; document.domanda.radio100001.checked=0; document.domanda.radio100003.checked=0;" ></TD>
 <TD ALIGN='LEFT' class="quiz_answer_class">
 CD4–CD8+</TD>
 </TR>
 <TR>
 <TD ALIGN='CENTER' class="quiz_letter_class"  WIDTH='50'>
-<SPAN class='quiz_letter_class'> D </SPAN><INPUT TYPE='radio' NAME='radio100003'  OnClick=" document.domanda.radio100000.checked=0; document.domanda.radio100001.checked=0; document.domanda.radio100002.checked=0;Domanda100()" ></TD>
+<SPAN class='quiz_letter_class'> D </SPAN><INPUT TYPE='radio' NAME='radio100003'  OnClick=" document.domanda.radio100000.checked=0; document.domanda.radio100001.checked=0; document.domanda.radio100002.checked=0;" ></TD>
 <TD ALIGN='LEFT' class="quiz_answer_class">
 CD4+CD8+</TD>
 </TR>
 </TABLE>
-<SPAN id='okButtonId99' class='okButtonClass'></SPAN><div style='width:100%; position: fixed; height:50px; background-color:#E0E0E0; padding:0px; bottom:50px; right:0px;'>
+<P><CENTER>
+</CENTER>
+<div style='width:100%; position: fixed; height:50px; background-color:#E0E0E0; padding:0px; bottom:0px; right:0px;'>
 <TABLE WIDTH='100%'>
 <TR>
 <TD ALIGN='LEFT' WIDTH='25%'>

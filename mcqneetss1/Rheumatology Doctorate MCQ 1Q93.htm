@@ -7,9 +7,8 @@
 <META name="keywords" content="quiz">
 <META name="description" content="Rheumatology NEET SS mock test 1">
 <TITLE>Quiz</TITLE>
-<LINK href="css/Rheumatology Doctorate MCQ 1.css" rel="stylesheet" type="text/css">
+<LINK href="css/Rheumatology Doctorate MCQ 11.css" rel="stylesheet" type="text/css">
 <link href="css/base.css" rel="stylesheet"/>
-<SCRIPT LANGUAGE='JavaScript' SRC='./Rheumatology Doctorate MCQ 1.js'></SCRIPT>
 <link href="css/modalDlg.css" rel="stylesheet"/>
 <link href="css/progressbar.css" rel="stylesheet" />
 <script src="js/progressbar.min.js" type="text/javascript"></script>
@@ -24,7 +23,7 @@ function InitProgressBar()
 }
 function GoNextQuestion()
 {
-  if (valid[92]==0) {
+  if (parent.valid[92]==0) {
     if (window.confirm('Confirm your answer ?')) {
       if (Domanda93()) return 1;
     }
@@ -32,15 +31,10 @@ function GoNextQuestion()
   return 0;
 }
 function EndTestSkip() {
-Constructor();
-RetrieveAllAnswer();
-startFloatLayer();
-RetrieveStatusBar();
-RestartTimer();
-if (end_test==1) {
- if (valid[92]==0) {
-   allAnsReport[92] = new initValuate93();
-   doValuate(92,document.domanda.score93,document.domanda.risposta93);
+if (parent.end_test==1) {
+ if (parent.valid[92]==0) {
+   parent.allAnsReport[92] = new initValuate93();
+   parent.doValuate(92,document.domanda.score93,document.domanda.risposta93);
    location.href = "Rheumatology Doctorate MCQ 1Q94.htm";
  }
  }
@@ -50,30 +44,18 @@ function ManageLoadPage()
 EndTestSkip();}
 </script>
 </HEAD>
-<BODY OnLoad="ManageLoadPage()"  Onunload="StoreStatusBar()">
+<BODY OnLoad="ManageLoadPage()" >
 <div style="width:65%; margin:0 auto;">
 <script language="javascript" type="text/javascript">
-  keyword = "E25#s9iAOsz";
+  parent.keyword = "pCQMrMjO";
 </script>
-  <form class="hidden_style"><input type="hidden" id="hidden_url" value="css/Rheumatology Doctorate MCQ 1.css"></form>
+  <form class="hidden_style"><input type="hidden" id="hidden_url" value="css/Rheumatology Doctorate MCQ 11.css"></form>
 <CENTER>
 <SPAN class='quiz_title_class'>Rheumatology NEET SS mock test 1</SPAN><BR>
 </CENTER>
 <HR class='horizontal-bar'>
 <FORM NAME='domanda'>
 
-<TABLE id='FloatingStatusbarPanel' width='95%' style='position:absolute; left:100px; top:-100px; z-index:2;'>
-<TR>
-<TD ALIGN='left' ID='clock' CLASS='floating_statusbar_class'>01:00:00</TD>
-<TD ALIGN='center' CLASS='floating_statusbar_class'>
-correct :<SPAN ID='nRight'>0</SPAN>
-</TD><TD ALIGN='center' CLASS='floating_statusbar_class'>
-wrong :<SPAN ID='nWrong'>0</SPAN>
-</TD><TD ALIGN='center' CLASS='floating_statusbar_class'>
-to be answered :<SPAN ID='nToDo'>100</SPAN>
-</TD></TR></TABLE>
-
-<div id='retire_btn_div'><img alt='Retire' title='Retire' id='retire_btn_img' src='media/btn-close-x.png' OnClick='Retire()'></div>
 <script language="javascript" type="text/javascript">
 function initValuate93()
 {
@@ -82,37 +64,33 @@ function initValuate93()
  if (document.domanda.radio093000.checked==true) choice=1; else choice=0;
  answer = "";
  remark = "";
- valuation = DecodeNumber('vn0lNOymksk=',1416,-1,1);
- this[0] = new AnsReport(choice,valuation,remark,0,answer);
+ valuation = parent.DecodeNumber('YKZYBY7xI1g=',1085,-1,1);
+ this[0] = new parent.AnsReport(choice,valuation,remark,0,answer);
  if (document.domanda.radio093001.checked==true) choice=1; else choice=0;
  answer = "";
  remark = "";
- valuation = DecodeNumber('uvuVzzVxsa4=',1429,-1,1);
- this[1] = new AnsReport(choice,valuation,remark,0,answer);
+ valuation = parent.DecodeNumber('p/mWiIkZ6DA=',1098,-1,1);
+ this[1] = new parent.AnsReport(choice,valuation,remark,0,answer);
  if (document.domanda.radio093002.checked==true) choice=1; else choice=0;
  answer = "";
  remark = "";
- valuation = DecodeNumber('VjmRHc/cdVM=',1442,-1,1);
- this[2] = new AnsReport(choice,valuation,remark,0,answer);
+ valuation = parent.DecodeNumber('AFf5aNhchPo=',1111,-1,1);
+ this[2] = new parent.AnsReport(choice,valuation,remark,0,answer);
  if (document.domanda.radio093003.checked==true) choice=1; else choice=0;
  answer = "";
  remark = "";
- valuation = DecodeNumber('aBYFfp0TfOA=',1455,-1,1);
- this[3] = new AnsReport(choice,valuation,remark,0,answer);
- pesi[92]=DecodeNumber('grCPboJLGbQ=',1458,0,99999);
+ valuation = parent.DecodeNumber('7HASwLFHqMY=',1125,-1,1);
+ this[3] = new parent.AnsReport(choice,valuation,remark,0,answer);
+ parent.pesi[92]=parent.DecodeNumber('KBXGbkcxDSY=',1128,0,99999);
 
 }
 
 function Domanda93()
 {
- if ((document.domanda.radio093000.checked==false) && (document.domanda.radio093001.checked==false) && (document.domanda.radio093002.checked==false) && (document.domanda.radio093003.checked==false) )
- { IncompletedQuest(1); return 0; }
- RetrieveAllAnswer();
- if (valid[92]!=0) { DoneBefore(); return; }
- allAnsReport[92] = new initValuate93();
- doValuate(92);
- StoreAnswer(92);
- PrintAnswer(92,92);
+ if (parent.valid[92]!=0) { parent.DoneBefore(); return; }
+ parent.allAnsReport[92] = new initValuate93();
+ parent.doValuate(92);
+ parent.PrintAnswer(92,92);
  return 1;
 }
 
@@ -135,30 +113,32 @@ With respect to immune neuroendocrine networks</TD></TR></TABLE>
 <TABLE WIDTH='100%'>
 <TR>
 <TD ALIGN='CENTER' class="quiz_letter_class"  WIDTH='50'>
-<SPAN class='quiz_letter_class'> A </SPAN><INPUT TYPE='radio' NAME='radio093000'  OnClick=" document.domanda.radio093001.checked=0; document.domanda.radio093002.checked=0; document.domanda.radio093003.checked=0;Domanda93()" ></TD>
+<SPAN class='quiz_letter_class'> A </SPAN><INPUT TYPE='radio' NAME='radio093000'  OnClick=" document.domanda.radio093001.checked=0; document.domanda.radio093002.checked=0; document.domanda.radio093003.checked=0;" ></TD>
 <TD ALIGN='LEFT' class="quiz_answer_class">
 They exist only in higher primates</TD>
 </TR>
 <TR>
 <TD ALIGN='CENTER' class="quiz_letter_class"  WIDTH='50'>
-<SPAN class='quiz_letter_class'> B </SPAN><INPUT TYPE='radio' NAME='radio093001'  OnClick=" document.domanda.radio093000.checked=0; document.domanda.radio093002.checked=0; document.domanda.radio093003.checked=0;Domanda93()" ></TD>
+<SPAN class='quiz_letter_class'> B </SPAN><INPUT TYPE='radio' NAME='radio093001'  OnClick=" document.domanda.radio093000.checked=0; document.domanda.radio093002.checked=0; document.domanda.radio093003.checked=0;" ></TD>
 <TD ALIGN='LEFT' class="quiz_answer_class">
 Do not involve ACTH</TD>
 </TR>
 <TR>
 <TD ALIGN='CENTER' class="quiz_letter_class"  WIDTH='50'>
-<SPAN class='quiz_letter_class'> C </SPAN><INPUT TYPE='radio' NAME='radio093002'  OnClick=" document.domanda.radio093000.checked=0; document.domanda.radio093001.checked=0; document.domanda.radio093003.checked=0;Domanda93()" ></TD>
+<SPAN class='quiz_letter_class'> C </SPAN><INPUT TYPE='radio' NAME='radio093002'  OnClick=" document.domanda.radio093000.checked=0; document.domanda.radio093001.checked=0; document.domanda.radio093003.checked=0;" ></TD>
 <TD ALIGN='LEFT' class="quiz_answer_class">
 Does not involve the hypothalamic/pituitary axis</TD>
 </TR>
 <TR>
 <TD ALIGN='CENTER' class="quiz_letter_class"  WIDTH='50'>
-<SPAN class='quiz_letter_class'> D </SPAN><INPUT TYPE='radio' NAME='radio093003'  OnClick=" document.domanda.radio093000.checked=0; document.domanda.radio093001.checked=0; document.domanda.radio093002.checked=0;Domanda93()" ></TD>
+<SPAN class='quiz_letter_class'> D </SPAN><INPUT TYPE='radio' NAME='radio093003'  OnClick=" document.domanda.radio093000.checked=0; document.domanda.radio093001.checked=0; document.domanda.radio093002.checked=0;" ></TD>
 <TD ALIGN='LEFT' class="quiz_answer_class">
 Augmentation of glucocorticoid production by IL-1 is a good example</TD>
 </TR>
 </TABLE>
-<SPAN id='okButtonId92' class='okButtonClass'></SPAN><div style='width:100%; position: fixed; height:50px; background-color:#E0E0E0; padding:0px; bottom:50px; right:0px;'>
+<P><CENTER>
+</CENTER>
+<div style='width:100%; position: fixed; height:50px; background-color:#E0E0E0; padding:0px; bottom:0px; right:0px;'>
 <TABLE WIDTH='100%'>
 <TR>
 <TD ALIGN='LEFT' WIDTH='25%'>
