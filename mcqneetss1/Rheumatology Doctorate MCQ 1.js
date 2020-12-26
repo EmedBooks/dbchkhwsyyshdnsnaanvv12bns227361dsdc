@@ -3,7 +3,7 @@ var qmakeProgName = "QuizFaber";
 var qmakeURL = 'www.quizfaber.com/';
 var dhtmlEnabled = 1;
 var html5Enabled = 1;
-var frameEnabled = 0;
+var frameEnabled = 1;
 var charset = 'Windows-1252';
 var soundEnable = 0;
 var okSound='';
@@ -19,7 +19,7 @@ var roundvoto = 1;
 var voto = 0;
 var computeMarkFnType = 0;
 var silent = 0;
-var quizRetire = 1;
+var quizRetire = 0;
 var showReport = 0;
 var ncols_report = 1;
 var valutaQuiz = 1;
@@ -2116,14 +2116,6 @@ str += " - "+GetRemFromMark(voto);
 return str;
 }
 }
-function startFloatLayer()
-{
-var y = window.innerHeight + window.pageYOffset - 40;
-document.getElementById('FloatingStatusbarPanel').style.position = "absolute";
-document.getElementById('FloatingStatusbarPanel').style.left = "10px";
-document.getElementById('FloatingStatusbarPanel').style.top = y + "px";
-setTimeout("startFloatLayer()", 100);
-}
 function getHTMLResultBox(feedback, title, bodyMsg, n)
 {
 var msg;
@@ -2157,7 +2149,7 @@ msg += bodyMsg + "<HR>";
 msg += "</SPAN>";
 msg += "<INPUT TYPE='BUTTON' VALUE='OK' class='question_feedback_botton' ";
 if (resultBoxKind == 0) {
-msg += "onClick='hideWindow(" + n + ")'";
+msg += "onClick='parent.hideWindow(" + n + ")'";
 }
 else {
 msg += "onClick='self.close()'";
@@ -2170,7 +2162,7 @@ return getHTMLResultBox(-2, "Selected answer", "", n);
 }
 function getBooleanAnswer(n,m)
 {
-var title,msg="";
+var title, msg = "";
 var feedback = 0;
 if (nScore[n] == getNumAns(n)) {
 feedback = 1;
@@ -2184,7 +2176,7 @@ feedback = 0;
 title = "Right Answers " + nScore[n] + " / " + getNumAns(n);
 if (nScore[n]<getNumAns(n))
 msg = "Wrong Answers : " + getListOfMistake(n);
-return getHTMLResultBox(feedback, title, msg, n);
+return getHTMLResultBox(feedback,title,msg,n);
 }
 function getRightAnswer(n,m,explan)
 {
@@ -2204,7 +2196,7 @@ title = "Wrong!<BR>The correct answer was " + getListOfRightAns(n);
 }
 else {
 title = "Wrong!";
-} 
+}
 for (i=0;i<explan.length; i++) {
 if (explan[i]!="") {
 msg+=explan[i]+"<BR>";
@@ -2238,50 +2230,46 @@ var i,count;
 var explan = new initListOfRemark(n);
 var layer;
 var table;
-layer = document.getElementById("hideTxt"+n); 
-table = document.getElementById("hideAns"+n); 
+layer = frames.quiz_main.document.getElementById("hideTxt"+n); 
+table = frames.quiz_main.document.getElementById("hideAns"+n);   
 /*}
 else {
-layer = document.getElementById("hideTxt");
-table = document.getElementById("hideAns");
+layer = frames.quiz_main.document.getElementById("hideTxt");
+table = frames.quiz_main.document.getElementById("hideAns");
 }*/
 if (silent==1) {
+if (questSlide==0) {
 ShowResultBox(getRispostaSelezionata(n,m),layer,table);
+}
 }
 else {
 if (valid[n]==1) {
 ShowResultBox(getRightAnswer(n,m,explan),layer,table);
-if (soundEnable==1)
-PlaySound('okSoundID');
+PlaySoundFile(okSound);
 }
 else {
 ShowResultBox(getWrongAnswer(n,m,explan),layer,table);
-if (soundEnable==1)
-PlaySound('errSoundID');
+PlaySoundFile(errSound);
 }
 }
 end_test = CountAnswers();
-UpdateSlideMenu();
+PrintStatusBar();
+PrintBottomFrame();
 if (end_test==1) {
 window.status = "";
 window.alert("You have answered all of the questions");
 EndQuiz();
-}
-else {
-PrintStatusBar();
 }
 return end_test;
 }
 function PrintOpenAnswer(n) {
 end_test = CountAnswers();
-UpdateSlideMenu();
+PrintStatusBar();
+PrintBottomFrame();
 if (end_test==1) {
 window.status = "";
 window.alert("You have answered all of the questions");
 EndQuiz();
-}
-else {
-PrintStatusBar();
 }
 return end_test;
 }
@@ -2290,29 +2278,29 @@ function PrintBooleanAnswer(n,m)
 var i,count;
 var layer;
 var table;
-layer = document.getElementById("hideTxt"+n); 
-table = document.getElementById("hideAns"+n); 
+layer = frames.quiz_main.document.getElementById("hideTxt"+n); 
+table = frames.quiz_main.document.getElementById("hideAns"+n); 
 /*}
 else {
-layer = document.getElementById("hideTxt");
-table = document.getElementById("hideAns");
+layer = frames.quiz_main.document.getElementById("hideTxt");
+table = frames.quiz_main.document.getElementById("hideAns");
 }*/
 if (silent==0) {
 ShowResultBox(getBooleanAnswer(n,m),layer,table);
-if (soundEnable==1)
 PlaySoundBooleanAns(n);
 }
-else
+else {
+if (questSlide==0) {
 ShowResultBox(getRispostaSelezionata(n,m),layer,table);
+}
+}
 end_test = CountAnswers();
-UpdateSlideMenu();
+PrintStatusBar();
+PrintBottomFrame();
 if (end_test==1) {
 window.status = "";
 window.alert("You have answered all of the questions");
 EndQuiz();
-}
-else {
-PrintStatusBar();
 }
 return end_test;
 }
@@ -2321,29 +2309,29 @@ function PrintQuestionScore(n,m)
 var i,count;
 var layer;
 var table;
-layer = document.getElementById("hideTxt"+n); 
-table = document.getElementById("hideAns"+n); 
-/* }
+layer = frames.quiz_main.document.getElementById("hideTxt"+n); 
+table = frames.quiz_main.document.getElementById("hideAns"+n); 
+/*}
 else {
-layer = document.getElementById("hideTxt");
-table = document.getElementById("hideAns");
+layer = frames.quiz_main.document.getElementById("hideTxt");
+table = frames.quiz_main.document.getElementById("hideAns"); 
 }*/
 if (silent==0) {
 ShowResultBox(getQuestionScore(n,m),layer,table);
-if (soundEnable==1)
 PlaySoundWithScore(maxScore[n]);
 }
-else
+else {
+if (questSlide==0) {
 ShowResultBox(getRispostaSelezionata(n,m),layer,table);
+}
+}
 end_test = CountAnswers();
-UpdateSlideMenu();
+PrintStatusBar();
+PrintBottomFrame();
 if (end_test==1) {
 window.status = "";
 window.alert("You have answered all of the questions");
 EndQuiz();
-}
-else {
-PrintStatusBar();
 }
 return end_test;
 }
@@ -2364,750 +2352,769 @@ SetInnerText(hideTxtObj,htmlTag);
 }
 }
 }
-function hideWindow(n) 
-{
-var checkObj = document.getElementById("check"+n);
-checkObj.className='checkShow';
-var hideAnsObj = document.getElementById("hideAns"+n);
+function hideWindow(n) {
+var checkObj = frames.quiz_main.document.getElementById("check" + n);
+checkObj.className = 'checkShow';
+var hideAnsObj = frames.quiz_main.document.getElementById("hideAns" + n);
+hideAnsObj.className = 'cardHide';
+/*
+if (questSlide==0) {
+var hideAnsObj = frames.quiz_main.document.getElementById("hideAns"+n);
 hideAnsObj.className='cardHide';
-/*}
+}
 else {
-var hideAnsObj = document.getElementById("hideAns");
+var hideAnsObj = frames.quiz_main.document.getElementById("hideAns");
 hideAnsObj.className='cardHide';
 }*/
 }
-function UpdateSlideMenu()
-{
-if (silent==0) {
-var nRightObj = document.getElementById("nRight");
-var nWrongObj = document.getElementById("nWrong");
-SetInnerText(nRightObj,nc);  
-SetInnerText(nWrongObj,ns);  
-}
-var nToDoObj = document.getElementById("nToDo");
-SetInnerText(nToDoObj,nr);
-}
 function PrintResults() 
 {
-PrintPageResults(document, 1);
+PrintPageResults(frames.quiz_main.document, 0);
+PrintCopyright();
+}
+function PrintBottomFrame()
+{
+if (silent==0) {
+var nRightObj = frames.quiz_status.document.getElementById("nRight");
+var nWrongObj = frames.quiz_status.document.getElementById("nWrong");
+SetInnerText(nRightObj,nc);
+SetInnerText(nWrongObj,ns);   
+}
+var nToDoObj = frames.quiz_status.document.getElementById("nToDo");
+SetInnerText(nToDoObj,nr);
 }
 function PrintWrongKeyword() 
 {
-PrintOpenHTML(document, "", 1, 1);
-document.writeln(GetWrongKeyWord());
+PrintOpenHTML(frames.quiz_main.document, "", 1, 1);
+frames.quiz_main.document.writeln(GetWrongKeyWord());
+frames.quiz_main.document.writeln ("</body></html>");
+frames.quiz_main.document.close();
 PrintCopyright();
-document.writeln ("</body></html>");
-document.close();
 }
 function PrintNoReload() 
 {
-PrintOpenHTML(document, "", 1, 1);
-document.writeln(GetNoReloadableMsg());
+PrintOpenHTML(frames.quiz_main.document, "", 1, 1);
+frames.quiz_main.document.writeln(GetNoReloadableMsg());
+frames.quiz_main.document.writeln ("</body></html>");
+frames.quiz_main.document.close();
 PrintCopyright();
-document.writeln ("</body></html>");
-document.close();
+}
+function PrintCopyright() 
+{
+PrintOpenHTML(frames.quiz_status.document,"Info",1,0);
+frames.quiz_status.document.writeln("<STYLE>");
+frames.quiz_status.document.writeln("<!--");
+frames.quiz_status.document.writeln("BODY { margin-top:5px; margin-left:5px }");
+frames.quiz_status.document.writeln("-->");
+frames.quiz_status.document.writeln("</STYLE>");
+frames.quiz_status.document.writeln ("</head>");
+frames.quiz_status.document.writeln ("<body bgcolor ='#C0C0C0'>");
+if (printCpRg==1) {
+frames.quiz_status.document.writeln(GetCopyrightMsg());   
+}
+frames.quiz_status.document.writeln ("</body></html>");
+frames.quiz_status.document.close();
 }
 function AskPrintQuiz() {
 var i;
 if (window.confirm("Print quiz ?")) {
 if (questSlide==0) {
 if (confirmEachQst==0) {
-var verifyButtonIdObj = document.getElementById("verifyButtonId");
-verifyButtonIdObj.className="okButtonHidden";
+var verifyButtonObj = frames.quiz_main.document.getElementById("verifyButtonId");
+verifyButtonObj.className="okButtonHidden";
 }
 else if (questions-invisibleQuests>=1) {
 for (i=0; i<questions-invisibleQuests; i++) {
-var okButtonObj = document.getElementById("okButtonId"+i);
+var okButtonObj = frames.quiz_main.document.getElementById("okButtonId"+i);
 okButtonObj.className="okButtonHidden";
 if (silent==1) {
-			var checkObj = document.getElementById("check"+i);
-			checkObj.className='checkHide';   
-			var hideAnsObj = document.getElementById("hideAns"+i);
-			hideAnsObj.className='cardHide';         
+var hideAnsObj = frames.quiz_main.document.getElementById("hideAns"+i);
+hideAnsObj.className="cardHide";
+var checkObj = frames.quiz_main.document.getElementById("check"+i);
+checkObj.className="checkHide";
 }
 }
 }
 else {
-var okButtonObj = document.getElementById("okButtonId");
+var okButtonObj = frames.quiz_main.document.getElementById("okButtonId");
 okButtonObj.className="okButtonHidden";
-/*if (silent==1) {
-		 var checkObj = document.getElementById("check");
-		 var hideAnsObj = document.getElementById("hideAns");
-		 checkObj.className='checkHide';   
-		 hideAnsObj.className='cardHide';
-}
-*/
 if (silent == 1) {
-var checkObj = document.getElementById("check" + i);
-checkObj.className = 'checkHide';
-var hideAnsObj = document.getElementById("hideAns" + i);
-hideAnsObj.className = 'cardHide';
+var hideAnsObj = frames.quiz_main.document.getElementById("hideAns" + i);
+hideAnsObj.className = "cardHide";
+var checkObj = frames.quiz_main.document.getElementById("check" + i);
+checkObj.className = "checkHide";
+}
+/*
+if (silent==1) {
+var hideAnsObj = frames.quiz_main.document.getElementById("hideAns");
+hideAnsObj.className="cardHide";
+var checkObj = frames.quiz_main.document.getElementById("check");
+checkObj.className="checkHide";        
+}*/
 }
 }
-}
-window.print();
+frames.quiz_main.print();
 window.alert("QUIT PRINT");
-}
-}
-function PrintCopyright()
-{
-if (printCpRg==1) {
-document.writeln(GetCopyrightMsg());
 }
 }
 function ShowReviewButton()
 {
 if ((dhtmlEnabled == 1) && (reviewQuiz == 1))
 {
-var resultBtn = document.getElementById("result_btn_div");
+var resultBtn = frames.quiz_main.document.getElementById("result_btn_div");
 if (resultBtn != null) resultBtn.style.visibility = "visible";
 if (quizRetire == 1) {
-var retireBtn = document.getElementById("retire_btn_div");
+var retireBtn = frames.quiz_main.document.getElementById("retire_btn_div");
 if (retireBtn != null) retireBtn.style.visibility = "hidden";
 }
 }
 }
 function SetClock(timeStr)
 {
-var clockObj = document.getElementById("clock");
+var clockObj = frames.quiz_status.document.getElementById("clock");
 SetInnerText(clockObj,timeStr);
+}
+function PlaySoundFile(soundFile) {
+PrintOpenHTML(frames.quiz_hidden.document,"",0,1);
+frames.quiz_hidden.document.writeln ("<EMBED SRC='"+soundFile+"' AUTOSTART=TRUE HIDDEN=TRUE>");
+frames.quiz_hidden.document.writeln ("</body></html>");
+frames.quiz_hidden.document.close();
 }
 function PlaySoundBooleanAns(n)
 {
 if (nScore[n]==maxScore[n])
-PlaySound('okSoundID');
+PlaySoundFile(okSound);
 else if (nScore[n]==0)
-PlaySound('errSoundID');
+PlaySoundFile(errSound);
 else
-PlaySound('warnSoundID');
+PlaySoundFile(warnSound);
 }
 function PlaySoundWithScore(voto)
 {
 if (voto==maxvoto)
-PlaySound('okSoundID');
+PlaySoundFile(okSound);
 else if (voto==minvoto)
-PlaySound('errSoundID');
+PlaySoundFile(errSound);
 else
-PlaySound('warnSoundID');
+PlaySoundFile(warnSound);
 }
 var lastLayer = null;
 function showTooltip (thisLayer) {
-var toolTipObj = document.getElementById(thisLayer);
+var toolTipObj = frames.quiz_main.document.getElementById(thisLayer);
 toolTipObj.className = "tooltipShow";
 }
 function clearTooltip (thisLayer) {
-if (lastLayer!=null) {
+if (lastLayer!=null)
 deleteTooltip ();
-}
 lastLayer = thisLayer;
 setTimeout(deleteTooltip,1000);
 }
 function deleteTooltip () {
 if (lastLayer != null) {
-var toolTipObj = document.getElementById(lastLayer);
-toolTipObj.className  = "tooltipHide";
+var toolTipObj = frames.quiz_main.document.getElementById(lastLayer);
+toolTipObj.className  = "tooltipHide";   
 }
 lastLayer = null;
 }
 function completeInitValuate() {
- if (currPage==0) {
+ if (frames.quiz_main.currPage==0) {
    if (valid[0]==0) {
-     allAnsReport[0] = new initValuate1();
-     doValuate(0,document.domanda.score1,document.domanda.risposta1);
+     allAnsReport[0] = new frames.quiz_main.initValuate1();
+     doValuate(0,frames.quiz_main.document.domanda.score1,frames.quiz_main.document.domanda.risposta1);
      StoreAnswer(0);    }
-   location.href="Rheumatology Doctorate MCQ 1Q2.htm" }
- if (currPage==1) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q2.htm" }
+ if (frames.quiz_main.currPage==1) {
    if (valid[1]==0) {
-     allAnsReport[1] = new initValuate2();
-     doValuate(1,document.domanda.score2,document.domanda.risposta2);
+     allAnsReport[1] = new frames.quiz_main.initValuate2();
+     doValuate(1,frames.quiz_main.document.domanda.score2,frames.quiz_main.document.domanda.risposta2);
      StoreAnswer(1);    }
-   location.href="Rheumatology Doctorate MCQ 1Q3.htm" }
- if (currPage==2) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q3.htm" }
+ if (frames.quiz_main.currPage==2) {
    if (valid[2]==0) {
-     allAnsReport[2] = new initValuate3();
-     doValuate(2,document.domanda.score3,document.domanda.risposta3);
+     allAnsReport[2] = new frames.quiz_main.initValuate3();
+     doValuate(2,frames.quiz_main.document.domanda.score3,frames.quiz_main.document.domanda.risposta3);
      StoreAnswer(2);    }
-   location.href="Rheumatology Doctorate MCQ 1Q4.htm" }
- if (currPage==3) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q4.htm" }
+ if (frames.quiz_main.currPage==3) {
    if (valid[3]==0) {
-     allAnsReport[3] = new initValuate4();
-     doValuate(3,document.domanda.score4,document.domanda.risposta4);
+     allAnsReport[3] = new frames.quiz_main.initValuate4();
+     doValuate(3,frames.quiz_main.document.domanda.score4,frames.quiz_main.document.domanda.risposta4);
      StoreAnswer(3);    }
-   location.href="Rheumatology Doctorate MCQ 1Q5.htm" }
- if (currPage==4) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q5.htm" }
+ if (frames.quiz_main.currPage==4) {
    if (valid[4]==0) {
-     allAnsReport[4] = new initValuate5();
-     doValuate(4,document.domanda.score5,document.domanda.risposta5);
+     allAnsReport[4] = new frames.quiz_main.initValuate5();
+     doValuate(4,frames.quiz_main.document.domanda.score5,frames.quiz_main.document.domanda.risposta5);
      StoreAnswer(4);    }
-   location.href="Rheumatology Doctorate MCQ 1Q6.htm" }
- if (currPage==5) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q6.htm" }
+ if (frames.quiz_main.currPage==5) {
    if (valid[5]==0) {
-     allAnsReport[5] = new initValuate6();
-     doValuate(5,document.domanda.score6,document.domanda.risposta6);
+     allAnsReport[5] = new frames.quiz_main.initValuate6();
+     doValuate(5,frames.quiz_main.document.domanda.score6,frames.quiz_main.document.domanda.risposta6);
      StoreAnswer(5);    }
-   location.href="Rheumatology Doctorate MCQ 1Q7.htm" }
- if (currPage==6) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q7.htm" }
+ if (frames.quiz_main.currPage==6) {
    if (valid[6]==0) {
-     allAnsReport[6] = new initValuate7();
-     doValuate(6,document.domanda.score7,document.domanda.risposta7);
+     allAnsReport[6] = new frames.quiz_main.initValuate7();
+     doValuate(6,frames.quiz_main.document.domanda.score7,frames.quiz_main.document.domanda.risposta7);
      StoreAnswer(6);    }
-   location.href="Rheumatology Doctorate MCQ 1Q8.htm" }
- if (currPage==7) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q8.htm" }
+ if (frames.quiz_main.currPage==7) {
    if (valid[7]==0) {
-     allAnsReport[7] = new initValuate8();
-     doValuate(7,document.domanda.score8,document.domanda.risposta8);
+     allAnsReport[7] = new frames.quiz_main.initValuate8();
+     doValuate(7,frames.quiz_main.document.domanda.score8,frames.quiz_main.document.domanda.risposta8);
      StoreAnswer(7);    }
-   location.href="Rheumatology Doctorate MCQ 1Q9.htm" }
- if (currPage==8) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q9.htm" }
+ if (frames.quiz_main.currPage==8) {
    if (valid[8]==0) {
-     allAnsReport[8] = new initValuate9();
-     doValuate(8,document.domanda.score9,document.domanda.risposta9);
+     allAnsReport[8] = new frames.quiz_main.initValuate9();
+     doValuate(8,frames.quiz_main.document.domanda.score9,frames.quiz_main.document.domanda.risposta9);
      StoreAnswer(8);    }
-   location.href="Rheumatology Doctorate MCQ 1Q10.htm" }
- if (currPage==9) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q10.htm" }
+ if (frames.quiz_main.currPage==9) {
    if (valid[9]==0) {
-     allAnsReport[9] = new initValuate10();
-     doValuate(9,document.domanda.score10,document.domanda.risposta10);
+     allAnsReport[9] = new frames.quiz_main.initValuate10();
+     doValuate(9,frames.quiz_main.document.domanda.score10,frames.quiz_main.document.domanda.risposta10);
      StoreAnswer(9);    }
-   location.href="Rheumatology Doctorate MCQ 1Q11.htm" }
- if (currPage==10) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q11.htm" }
+ if (frames.quiz_main.currPage==10) {
    if (valid[10]==0) {
-     allAnsReport[10] = new initValuate11();
-     doValuate(10,document.domanda.score11,document.domanda.risposta11);
+     allAnsReport[10] = new frames.quiz_main.initValuate11();
+     doValuate(10,frames.quiz_main.document.domanda.score11,frames.quiz_main.document.domanda.risposta11);
      StoreAnswer(10);    }
-   location.href="Rheumatology Doctorate MCQ 1Q12.htm" }
- if (currPage==11) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q12.htm" }
+ if (frames.quiz_main.currPage==11) {
    if (valid[11]==0) {
-     allAnsReport[11] = new initValuate12();
-     doValuate(11,document.domanda.score12,document.domanda.risposta12);
+     allAnsReport[11] = new frames.quiz_main.initValuate12();
+     doValuate(11,frames.quiz_main.document.domanda.score12,frames.quiz_main.document.domanda.risposta12);
      StoreAnswer(11);    }
-   location.href="Rheumatology Doctorate MCQ 1Q13.htm" }
- if (currPage==12) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q13.htm" }
+ if (frames.quiz_main.currPage==12) {
    if (valid[12]==0) {
-     allAnsReport[12] = new initValuate13();
-     doValuate(12,document.domanda.score13,document.domanda.risposta13);
+     allAnsReport[12] = new frames.quiz_main.initValuate13();
+     doValuate(12,frames.quiz_main.document.domanda.score13,frames.quiz_main.document.domanda.risposta13);
      StoreAnswer(12);    }
-   location.href="Rheumatology Doctorate MCQ 1Q14.htm" }
- if (currPage==13) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q14.htm" }
+ if (frames.quiz_main.currPage==13) {
    if (valid[13]==0) {
-     allAnsReport[13] = new initValuate14();
-     doValuate(13,document.domanda.score14,document.domanda.risposta14);
+     allAnsReport[13] = new frames.quiz_main.initValuate14();
+     doValuate(13,frames.quiz_main.document.domanda.score14,frames.quiz_main.document.domanda.risposta14);
      StoreAnswer(13);    }
-   location.href="Rheumatology Doctorate MCQ 1Q15.htm" }
- if (currPage==14) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q15.htm" }
+ if (frames.quiz_main.currPage==14) {
    if (valid[14]==0) {
-     allAnsReport[14] = new initValuate15();
-     doValuate(14,document.domanda.score15,document.domanda.risposta15);
+     allAnsReport[14] = new frames.quiz_main.initValuate15();
+     doValuate(14,frames.quiz_main.document.domanda.score15,frames.quiz_main.document.domanda.risposta15);
      StoreAnswer(14);    }
-   location.href="Rheumatology Doctorate MCQ 1Q16.htm" }
- if (currPage==15) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q16.htm" }
+ if (frames.quiz_main.currPage==15) {
    if (valid[15]==0) {
-     allAnsReport[15] = new initValuate16();
-     doValuate(15,document.domanda.score16,document.domanda.risposta16);
+     allAnsReport[15] = new frames.quiz_main.initValuate16();
+     doValuate(15,frames.quiz_main.document.domanda.score16,frames.quiz_main.document.domanda.risposta16);
      StoreAnswer(15);    }
-   location.href="Rheumatology Doctorate MCQ 1Q17.htm" }
- if (currPage==16) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q17.htm" }
+ if (frames.quiz_main.currPage==16) {
    if (valid[16]==0) {
-     allAnsReport[16] = new initValuate17();
-     doValuate(16,document.domanda.score17,document.domanda.risposta17);
+     allAnsReport[16] = new frames.quiz_main.initValuate17();
+     doValuate(16,frames.quiz_main.document.domanda.score17,frames.quiz_main.document.domanda.risposta17);
      StoreAnswer(16);    }
-   location.href="Rheumatology Doctorate MCQ 1Q18.htm" }
- if (currPage==17) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q18.htm" }
+ if (frames.quiz_main.currPage==17) {
    if (valid[17]==0) {
-     allAnsReport[17] = new initValuate18();
-     doValuate(17,document.domanda.score18,document.domanda.risposta18);
+     allAnsReport[17] = new frames.quiz_main.initValuate18();
+     doValuate(17,frames.quiz_main.document.domanda.score18,frames.quiz_main.document.domanda.risposta18);
      StoreAnswer(17);    }
-   location.href="Rheumatology Doctorate MCQ 1Q19.htm" }
- if (currPage==18) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q19.htm" }
+ if (frames.quiz_main.currPage==18) {
    if (valid[18]==0) {
-     allAnsReport[18] = new initValuate19();
-     doValuate(18,document.domanda.score19,document.domanda.risposta19);
+     allAnsReport[18] = new frames.quiz_main.initValuate19();
+     doValuate(18,frames.quiz_main.document.domanda.score19,frames.quiz_main.document.domanda.risposta19);
      StoreAnswer(18);    }
-   location.href="Rheumatology Doctorate MCQ 1Q20.htm" }
- if (currPage==19) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q20.htm" }
+ if (frames.quiz_main.currPage==19) {
    if (valid[19]==0) {
-     allAnsReport[19] = new initValuate20();
-     doValuate(19,document.domanda.score20,document.domanda.risposta20);
+     allAnsReport[19] = new frames.quiz_main.initValuate20();
+     doValuate(19,frames.quiz_main.document.domanda.score20,frames.quiz_main.document.domanda.risposta20);
      StoreAnswer(19);    }
-   location.href="Rheumatology Doctorate MCQ 1Q21.htm" }
- if (currPage==20) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q21.htm" }
+ if (frames.quiz_main.currPage==20) {
    if (valid[20]==0) {
-     allAnsReport[20] = new initValuate21();
-     doValuate(20,document.domanda.score21,document.domanda.risposta21);
+     allAnsReport[20] = new frames.quiz_main.initValuate21();
+     doValuate(20,frames.quiz_main.document.domanda.score21,frames.quiz_main.document.domanda.risposta21);
      StoreAnswer(20);    }
-   location.href="Rheumatology Doctorate MCQ 1Q22.htm" }
- if (currPage==21) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q22.htm" }
+ if (frames.quiz_main.currPage==21) {
    if (valid[21]==0) {
-     allAnsReport[21] = new initValuate22();
-     doValuate(21,document.domanda.score22,document.domanda.risposta22);
+     allAnsReport[21] = new frames.quiz_main.initValuate22();
+     doValuate(21,frames.quiz_main.document.domanda.score22,frames.quiz_main.document.domanda.risposta22);
      StoreAnswer(21);    }
-   location.href="Rheumatology Doctorate MCQ 1Q23.htm" }
- if (currPage==22) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q23.htm" }
+ if (frames.quiz_main.currPage==22) {
    if (valid[22]==0) {
-     allAnsReport[22] = new initValuate23();
-     doValuate(22,document.domanda.score23,document.domanda.risposta23);
+     allAnsReport[22] = new frames.quiz_main.initValuate23();
+     doValuate(22,frames.quiz_main.document.domanda.score23,frames.quiz_main.document.domanda.risposta23);
      StoreAnswer(22);    }
-   location.href="Rheumatology Doctorate MCQ 1Q24.htm" }
- if (currPage==23) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q24.htm" }
+ if (frames.quiz_main.currPage==23) {
    if (valid[23]==0) {
-     allAnsReport[23] = new initValuate24();
-     doValuate(23,document.domanda.score24,document.domanda.risposta24);
+     allAnsReport[23] = new frames.quiz_main.initValuate24();
+     doValuate(23,frames.quiz_main.document.domanda.score24,frames.quiz_main.document.domanda.risposta24);
      StoreAnswer(23);    }
-   location.href="Rheumatology Doctorate MCQ 1Q25.htm" }
- if (currPage==24) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q25.htm" }
+ if (frames.quiz_main.currPage==24) {
    if (valid[24]==0) {
-     allAnsReport[24] = new initValuate25();
-     doValuate(24,document.domanda.score25,document.domanda.risposta25);
+     allAnsReport[24] = new frames.quiz_main.initValuate25();
+     doValuate(24,frames.quiz_main.document.domanda.score25,frames.quiz_main.document.domanda.risposta25);
      StoreAnswer(24);    }
-   location.href="Rheumatology Doctorate MCQ 1Q26.htm" }
- if (currPage==25) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q26.htm" }
+ if (frames.quiz_main.currPage==25) {
    if (valid[25]==0) {
-     allAnsReport[25] = new initValuate26();
-     doValuate(25,document.domanda.score26,document.domanda.risposta26);
+     allAnsReport[25] = new frames.quiz_main.initValuate26();
+     doValuate(25,frames.quiz_main.document.domanda.score26,frames.quiz_main.document.domanda.risposta26);
      StoreAnswer(25);    }
-   location.href="Rheumatology Doctorate MCQ 1Q27.htm" }
- if (currPage==26) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q27.htm" }
+ if (frames.quiz_main.currPage==26) {
    if (valid[26]==0) {
-     allAnsReport[26] = new initValuate27();
-     doValuate(26,document.domanda.score27,document.domanda.risposta27);
+     allAnsReport[26] = new frames.quiz_main.initValuate27();
+     doValuate(26,frames.quiz_main.document.domanda.score27,frames.quiz_main.document.domanda.risposta27);
      StoreAnswer(26);    }
-   location.href="Rheumatology Doctorate MCQ 1Q28.htm" }
- if (currPage==27) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q28.htm" }
+ if (frames.quiz_main.currPage==27) {
    if (valid[27]==0) {
-     allAnsReport[27] = new initValuate28();
-     doValuate(27,document.domanda.score28,document.domanda.risposta28);
+     allAnsReport[27] = new frames.quiz_main.initValuate28();
+     doValuate(27,frames.quiz_main.document.domanda.score28,frames.quiz_main.document.domanda.risposta28);
      StoreAnswer(27);    }
-   location.href="Rheumatology Doctorate MCQ 1Q29.htm" }
- if (currPage==28) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q29.htm" }
+ if (frames.quiz_main.currPage==28) {
    if (valid[28]==0) {
-     allAnsReport[28] = new initValuate29();
-     doValuate(28,document.domanda.score29,document.domanda.risposta29);
+     allAnsReport[28] = new frames.quiz_main.initValuate29();
+     doValuate(28,frames.quiz_main.document.domanda.score29,frames.quiz_main.document.domanda.risposta29);
      StoreAnswer(28);    }
-   location.href="Rheumatology Doctorate MCQ 1Q30.htm" }
- if (currPage==29) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q30.htm" }
+ if (frames.quiz_main.currPage==29) {
    if (valid[29]==0) {
-     allAnsReport[29] = new initValuate30();
-     doValuate(29,document.domanda.score30,document.domanda.risposta30);
+     allAnsReport[29] = new frames.quiz_main.initValuate30();
+     doValuate(29,frames.quiz_main.document.domanda.score30,frames.quiz_main.document.domanda.risposta30);
      StoreAnswer(29);    }
-   location.href="Rheumatology Doctorate MCQ 1Q31.htm" }
- if (currPage==30) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q31.htm" }
+ if (frames.quiz_main.currPage==30) {
    if (valid[30]==0) {
-     allAnsReport[30] = new initValuate31();
-     doValuate(30,document.domanda.score31,document.domanda.risposta31);
+     allAnsReport[30] = new frames.quiz_main.initValuate31();
+     doValuate(30,frames.quiz_main.document.domanda.score31,frames.quiz_main.document.domanda.risposta31);
      StoreAnswer(30);    }
-   location.href="Rheumatology Doctorate MCQ 1Q32.htm" }
- if (currPage==31) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q32.htm" }
+ if (frames.quiz_main.currPage==31) {
    if (valid[31]==0) {
-     allAnsReport[31] = new initValuate32();
-     doValuate(31,document.domanda.score32,document.domanda.risposta32);
+     allAnsReport[31] = new frames.quiz_main.initValuate32();
+     doValuate(31,frames.quiz_main.document.domanda.score32,frames.quiz_main.document.domanda.risposta32);
      StoreAnswer(31);    }
-   location.href="Rheumatology Doctorate MCQ 1Q33.htm" }
- if (currPage==32) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q33.htm" }
+ if (frames.quiz_main.currPage==32) {
    if (valid[32]==0) {
-     allAnsReport[32] = new initValuate33();
-     doValuate(32,document.domanda.score33,document.domanda.risposta33);
+     allAnsReport[32] = new frames.quiz_main.initValuate33();
+     doValuate(32,frames.quiz_main.document.domanda.score33,frames.quiz_main.document.domanda.risposta33);
      StoreAnswer(32);    }
-   location.href="Rheumatology Doctorate MCQ 1Q34.htm" }
- if (currPage==33) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q34.htm" }
+ if (frames.quiz_main.currPage==33) {
    if (valid[33]==0) {
-     allAnsReport[33] = new initValuate34();
-     doValuate(33,document.domanda.score34,document.domanda.risposta34);
+     allAnsReport[33] = new frames.quiz_main.initValuate34();
+     doValuate(33,frames.quiz_main.document.domanda.score34,frames.quiz_main.document.domanda.risposta34);
      StoreAnswer(33);    }
-   location.href="Rheumatology Doctorate MCQ 1Q35.htm" }
- if (currPage==34) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q35.htm" }
+ if (frames.quiz_main.currPage==34) {
    if (valid[34]==0) {
-     allAnsReport[34] = new initValuate35();
-     doValuate(34,document.domanda.score35,document.domanda.risposta35);
+     allAnsReport[34] = new frames.quiz_main.initValuate35();
+     doValuate(34,frames.quiz_main.document.domanda.score35,frames.quiz_main.document.domanda.risposta35);
      StoreAnswer(34);    }
-   location.href="Rheumatology Doctorate MCQ 1Q36.htm" }
- if (currPage==35) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q36.htm" }
+ if (frames.quiz_main.currPage==35) {
    if (valid[35]==0) {
-     allAnsReport[35] = new initValuate36();
-     doValuate(35,document.domanda.score36,document.domanda.risposta36);
+     allAnsReport[35] = new frames.quiz_main.initValuate36();
+     doValuate(35,frames.quiz_main.document.domanda.score36,frames.quiz_main.document.domanda.risposta36);
      StoreAnswer(35);    }
-   location.href="Rheumatology Doctorate MCQ 1Q37.htm" }
- if (currPage==36) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q37.htm" }
+ if (frames.quiz_main.currPage==36) {
    if (valid[36]==0) {
-     allAnsReport[36] = new initValuate37();
-     doValuate(36,document.domanda.score37,document.domanda.risposta37);
+     allAnsReport[36] = new frames.quiz_main.initValuate37();
+     doValuate(36,frames.quiz_main.document.domanda.score37,frames.quiz_main.document.domanda.risposta37);
      StoreAnswer(36);    }
-   location.href="Rheumatology Doctorate MCQ 1Q38.htm" }
- if (currPage==37) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q38.htm" }
+ if (frames.quiz_main.currPage==37) {
    if (valid[37]==0) {
-     allAnsReport[37] = new initValuate38();
-     doValuate(37,document.domanda.score38,document.domanda.risposta38);
+     allAnsReport[37] = new frames.quiz_main.initValuate38();
+     doValuate(37,frames.quiz_main.document.domanda.score38,frames.quiz_main.document.domanda.risposta38);
      StoreAnswer(37);    }
-   location.href="Rheumatology Doctorate MCQ 1Q39.htm" }
- if (currPage==38) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q39.htm" }
+ if (frames.quiz_main.currPage==38) {
    if (valid[38]==0) {
-     allAnsReport[38] = new initValuate39();
-     doValuate(38,document.domanda.score39,document.domanda.risposta39);
+     allAnsReport[38] = new frames.quiz_main.initValuate39();
+     doValuate(38,frames.quiz_main.document.domanda.score39,frames.quiz_main.document.domanda.risposta39);
      StoreAnswer(38);    }
-   location.href="Rheumatology Doctorate MCQ 1Q40.htm" }
- if (currPage==39) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q40.htm" }
+ if (frames.quiz_main.currPage==39) {
    if (valid[39]==0) {
-     allAnsReport[39] = new initValuate40();
-     doValuate(39,document.domanda.score40,document.domanda.risposta40);
+     allAnsReport[39] = new frames.quiz_main.initValuate40();
+     doValuate(39,frames.quiz_main.document.domanda.score40,frames.quiz_main.document.domanda.risposta40);
      StoreAnswer(39);    }
-   location.href="Rheumatology Doctorate MCQ 1Q41.htm" }
- if (currPage==40) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q41.htm" }
+ if (frames.quiz_main.currPage==40) {
    if (valid[40]==0) {
-     allAnsReport[40] = new initValuate41();
-     doValuate(40,document.domanda.score41,document.domanda.risposta41);
+     allAnsReport[40] = new frames.quiz_main.initValuate41();
+     doValuate(40,frames.quiz_main.document.domanda.score41,frames.quiz_main.document.domanda.risposta41);
      StoreAnswer(40);    }
-   location.href="Rheumatology Doctorate MCQ 1Q42.htm" }
- if (currPage==41) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q42.htm" }
+ if (frames.quiz_main.currPage==41) {
    if (valid[41]==0) {
-     allAnsReport[41] = new initValuate42();
-     doValuate(41,document.domanda.score42,document.domanda.risposta42);
+     allAnsReport[41] = new frames.quiz_main.initValuate42();
+     doValuate(41,frames.quiz_main.document.domanda.score42,frames.quiz_main.document.domanda.risposta42);
      StoreAnswer(41);    }
-   location.href="Rheumatology Doctorate MCQ 1Q43.htm" }
- if (currPage==42) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q43.htm" }
+ if (frames.quiz_main.currPage==42) {
    if (valid[42]==0) {
-     allAnsReport[42] = new initValuate43();
-     doValuate(42,document.domanda.score43,document.domanda.risposta43);
+     allAnsReport[42] = new frames.quiz_main.initValuate43();
+     doValuate(42,frames.quiz_main.document.domanda.score43,frames.quiz_main.document.domanda.risposta43);
      StoreAnswer(42);    }
-   location.href="Rheumatology Doctorate MCQ 1Q44.htm" }
- if (currPage==43) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q44.htm" }
+ if (frames.quiz_main.currPage==43) {
    if (valid[43]==0) {
-     allAnsReport[43] = new initValuate44();
-     doValuate(43,document.domanda.score44,document.domanda.risposta44);
+     allAnsReport[43] = new frames.quiz_main.initValuate44();
+     doValuate(43,frames.quiz_main.document.domanda.score44,frames.quiz_main.document.domanda.risposta44);
      StoreAnswer(43);    }
-   location.href="Rheumatology Doctorate MCQ 1Q45.htm" }
- if (currPage==44) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q45.htm" }
+ if (frames.quiz_main.currPage==44) {
    if (valid[44]==0) {
-     allAnsReport[44] = new initValuate45();
-     doValuate(44,document.domanda.score45,document.domanda.risposta45);
+     allAnsReport[44] = new frames.quiz_main.initValuate45();
+     doValuate(44,frames.quiz_main.document.domanda.score45,frames.quiz_main.document.domanda.risposta45);
      StoreAnswer(44);    }
-   location.href="Rheumatology Doctorate MCQ 1Q46.htm" }
- if (currPage==45) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q46.htm" }
+ if (frames.quiz_main.currPage==45) {
    if (valid[45]==0) {
-     allAnsReport[45] = new initValuate46();
-     doValuate(45,document.domanda.score46,document.domanda.risposta46);
+     allAnsReport[45] = new frames.quiz_main.initValuate46();
+     doValuate(45,frames.quiz_main.document.domanda.score46,frames.quiz_main.document.domanda.risposta46);
      StoreAnswer(45);    }
-   location.href="Rheumatology Doctorate MCQ 1Q47.htm" }
- if (currPage==46) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q47.htm" }
+ if (frames.quiz_main.currPage==46) {
    if (valid[46]==0) {
-     allAnsReport[46] = new initValuate47();
-     doValuate(46,document.domanda.score47,document.domanda.risposta47);
+     allAnsReport[46] = new frames.quiz_main.initValuate47();
+     doValuate(46,frames.quiz_main.document.domanda.score47,frames.quiz_main.document.domanda.risposta47);
      StoreAnswer(46);    }
-   location.href="Rheumatology Doctorate MCQ 1Q48.htm" }
- if (currPage==47) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q48.htm" }
+ if (frames.quiz_main.currPage==47) {
    if (valid[47]==0) {
-     allAnsReport[47] = new initValuate48();
-     doValuate(47,document.domanda.score48,document.domanda.risposta48);
+     allAnsReport[47] = new frames.quiz_main.initValuate48();
+     doValuate(47,frames.quiz_main.document.domanda.score48,frames.quiz_main.document.domanda.risposta48);
      StoreAnswer(47);    }
-   location.href="Rheumatology Doctorate MCQ 1Q49.htm" }
- if (currPage==48) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q49.htm" }
+ if (frames.quiz_main.currPage==48) {
    if (valid[48]==0) {
-     allAnsReport[48] = new initValuate49();
-     doValuate(48,document.domanda.score49,document.domanda.risposta49);
+     allAnsReport[48] = new frames.quiz_main.initValuate49();
+     doValuate(48,frames.quiz_main.document.domanda.score49,frames.quiz_main.document.domanda.risposta49);
      StoreAnswer(48);    }
-   location.href="Rheumatology Doctorate MCQ 1Q50.htm" }
- if (currPage==49) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q50.htm" }
+ if (frames.quiz_main.currPage==49) {
    if (valid[49]==0) {
-     allAnsReport[49] = new initValuate50();
-     doValuate(49,document.domanda.score50,document.domanda.risposta50);
+     allAnsReport[49] = new frames.quiz_main.initValuate50();
+     doValuate(49,frames.quiz_main.document.domanda.score50,frames.quiz_main.document.domanda.risposta50);
      StoreAnswer(49);    }
-   location.href="Rheumatology Doctorate MCQ 1Q51.htm" }
- if (currPage==50) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q51.htm" }
+ if (frames.quiz_main.currPage==50) {
    if (valid[50]==0) {
-     allAnsReport[50] = new initValuate51();
-     doValuate(50,document.domanda.score51,document.domanda.risposta51);
+     allAnsReport[50] = new frames.quiz_main.initValuate51();
+     doValuate(50,frames.quiz_main.document.domanda.score51,frames.quiz_main.document.domanda.risposta51);
      StoreAnswer(50);    }
-   location.href="Rheumatology Doctorate MCQ 1Q52.htm" }
- if (currPage==51) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q52.htm" }
+ if (frames.quiz_main.currPage==51) {
    if (valid[51]==0) {
-     allAnsReport[51] = new initValuate52();
-     doValuate(51,document.domanda.score52,document.domanda.risposta52);
+     allAnsReport[51] = new frames.quiz_main.initValuate52();
+     doValuate(51,frames.quiz_main.document.domanda.score52,frames.quiz_main.document.domanda.risposta52);
      StoreAnswer(51);    }
-   location.href="Rheumatology Doctorate MCQ 1Q53.htm" }
- if (currPage==52) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q53.htm" }
+ if (frames.quiz_main.currPage==52) {
    if (valid[52]==0) {
-     allAnsReport[52] = new initValuate53();
-     doValuate(52,document.domanda.score53,document.domanda.risposta53);
+     allAnsReport[52] = new frames.quiz_main.initValuate53();
+     doValuate(52,frames.quiz_main.document.domanda.score53,frames.quiz_main.document.domanda.risposta53);
      StoreAnswer(52);    }
-   location.href="Rheumatology Doctorate MCQ 1Q54.htm" }
- if (currPage==53) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q54.htm" }
+ if (frames.quiz_main.currPage==53) {
    if (valid[53]==0) {
-     allAnsReport[53] = new initValuate54();
-     doValuate(53,document.domanda.score54,document.domanda.risposta54);
+     allAnsReport[53] = new frames.quiz_main.initValuate54();
+     doValuate(53,frames.quiz_main.document.domanda.score54,frames.quiz_main.document.domanda.risposta54);
      StoreAnswer(53);    }
-   location.href="Rheumatology Doctorate MCQ 1Q55.htm" }
- if (currPage==54) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q55.htm" }
+ if (frames.quiz_main.currPage==54) {
    if (valid[54]==0) {
-     allAnsReport[54] = new initValuate55();
-     doValuate(54,document.domanda.score55,document.domanda.risposta55);
+     allAnsReport[54] = new frames.quiz_main.initValuate55();
+     doValuate(54,frames.quiz_main.document.domanda.score55,frames.quiz_main.document.domanda.risposta55);
      StoreAnswer(54);    }
-   location.href="Rheumatology Doctorate MCQ 1Q56.htm" }
- if (currPage==55) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q56.htm" }
+ if (frames.quiz_main.currPage==55) {
    if (valid[55]==0) {
-     allAnsReport[55] = new initValuate56();
-     doValuate(55,document.domanda.score56,document.domanda.risposta56);
+     allAnsReport[55] = new frames.quiz_main.initValuate56();
+     doValuate(55,frames.quiz_main.document.domanda.score56,frames.quiz_main.document.domanda.risposta56);
      StoreAnswer(55);    }
-   location.href="Rheumatology Doctorate MCQ 1Q57.htm" }
- if (currPage==56) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q57.htm" }
+ if (frames.quiz_main.currPage==56) {
    if (valid[56]==0) {
-     allAnsReport[56] = new initValuate57();
-     doValuate(56,document.domanda.score57,document.domanda.risposta57);
+     allAnsReport[56] = new frames.quiz_main.initValuate57();
+     doValuate(56,frames.quiz_main.document.domanda.score57,frames.quiz_main.document.domanda.risposta57);
      StoreAnswer(56);    }
-   location.href="Rheumatology Doctorate MCQ 1Q58.htm" }
- if (currPage==57) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q58.htm" }
+ if (frames.quiz_main.currPage==57) {
    if (valid[57]==0) {
-     allAnsReport[57] = new initValuate58();
-     doValuate(57,document.domanda.score58,document.domanda.risposta58);
+     allAnsReport[57] = new frames.quiz_main.initValuate58();
+     doValuate(57,frames.quiz_main.document.domanda.score58,frames.quiz_main.document.domanda.risposta58);
      StoreAnswer(57);    }
-   location.href="Rheumatology Doctorate MCQ 1Q59.htm" }
- if (currPage==58) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q59.htm" }
+ if (frames.quiz_main.currPage==58) {
    if (valid[58]==0) {
-     allAnsReport[58] = new initValuate59();
-     doValuate(58,document.domanda.score59,document.domanda.risposta59);
+     allAnsReport[58] = new frames.quiz_main.initValuate59();
+     doValuate(58,frames.quiz_main.document.domanda.score59,frames.quiz_main.document.domanda.risposta59);
      StoreAnswer(58);    }
-   location.href="Rheumatology Doctorate MCQ 1Q60.htm" }
- if (currPage==59) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q60.htm" }
+ if (frames.quiz_main.currPage==59) {
    if (valid[59]==0) {
-     allAnsReport[59] = new initValuate60();
-     doValuate(59,document.domanda.score60,document.domanda.risposta60);
+     allAnsReport[59] = new frames.quiz_main.initValuate60();
+     doValuate(59,frames.quiz_main.document.domanda.score60,frames.quiz_main.document.domanda.risposta60);
      StoreAnswer(59);    }
-   location.href="Rheumatology Doctorate MCQ 1Q61.htm" }
- if (currPage==60) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q61.htm" }
+ if (frames.quiz_main.currPage==60) {
    if (valid[60]==0) {
-     allAnsReport[60] = new initValuate61();
-     doValuate(60,document.domanda.score61,document.domanda.risposta61);
+     allAnsReport[60] = new frames.quiz_main.initValuate61();
+     doValuate(60,frames.quiz_main.document.domanda.score61,frames.quiz_main.document.domanda.risposta61);
      StoreAnswer(60);    }
-   location.href="Rheumatology Doctorate MCQ 1Q62.htm" }
- if (currPage==61) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q62.htm" }
+ if (frames.quiz_main.currPage==61) {
    if (valid[61]==0) {
-     allAnsReport[61] = new initValuate62();
-     doValuate(61,document.domanda.score62,document.domanda.risposta62);
+     allAnsReport[61] = new frames.quiz_main.initValuate62();
+     doValuate(61,frames.quiz_main.document.domanda.score62,frames.quiz_main.document.domanda.risposta62);
      StoreAnswer(61);    }
-   location.href="Rheumatology Doctorate MCQ 1Q63.htm" }
- if (currPage==62) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q63.htm" }
+ if (frames.quiz_main.currPage==62) {
    if (valid[62]==0) {
-     allAnsReport[62] = new initValuate63();
-     doValuate(62,document.domanda.score63,document.domanda.risposta63);
+     allAnsReport[62] = new frames.quiz_main.initValuate63();
+     doValuate(62,frames.quiz_main.document.domanda.score63,frames.quiz_main.document.domanda.risposta63);
      StoreAnswer(62);    }
-   location.href="Rheumatology Doctorate MCQ 1Q64.htm" }
- if (currPage==63) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q64.htm" }
+ if (frames.quiz_main.currPage==63) {
    if (valid[63]==0) {
-     allAnsReport[63] = new initValuate64();
-     doValuate(63,document.domanda.score64,document.domanda.risposta64);
+     allAnsReport[63] = new frames.quiz_main.initValuate64();
+     doValuate(63,frames.quiz_main.document.domanda.score64,frames.quiz_main.document.domanda.risposta64);
      StoreAnswer(63);    }
-   location.href="Rheumatology Doctorate MCQ 1Q65.htm" }
- if (currPage==64) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q65.htm" }
+ if (frames.quiz_main.currPage==64) {
    if (valid[64]==0) {
-     allAnsReport[64] = new initValuate65();
-     doValuate(64,document.domanda.score65,document.domanda.risposta65);
+     allAnsReport[64] = new frames.quiz_main.initValuate65();
+     doValuate(64,frames.quiz_main.document.domanda.score65,frames.quiz_main.document.domanda.risposta65);
      StoreAnswer(64);    }
-   location.href="Rheumatology Doctorate MCQ 1Q66.htm" }
- if (currPage==65) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q66.htm" }
+ if (frames.quiz_main.currPage==65) {
    if (valid[65]==0) {
-     allAnsReport[65] = new initValuate66();
-     doValuate(65,document.domanda.score66,document.domanda.risposta66);
+     allAnsReport[65] = new frames.quiz_main.initValuate66();
+     doValuate(65,frames.quiz_main.document.domanda.score66,frames.quiz_main.document.domanda.risposta66);
      StoreAnswer(65);    }
-   location.href="Rheumatology Doctorate MCQ 1Q67.htm" }
- if (currPage==66) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q67.htm" }
+ if (frames.quiz_main.currPage==66) {
    if (valid[66]==0) {
-     allAnsReport[66] = new initValuate67();
-     doValuate(66,document.domanda.score67,document.domanda.risposta67);
+     allAnsReport[66] = new frames.quiz_main.initValuate67();
+     doValuate(66,frames.quiz_main.document.domanda.score67,frames.quiz_main.document.domanda.risposta67);
      StoreAnswer(66);    }
-   location.href="Rheumatology Doctorate MCQ 1Q68.htm" }
- if (currPage==67) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q68.htm" }
+ if (frames.quiz_main.currPage==67) {
    if (valid[67]==0) {
-     allAnsReport[67] = new initValuate68();
-     doValuate(67,document.domanda.score68,document.domanda.risposta68);
+     allAnsReport[67] = new frames.quiz_main.initValuate68();
+     doValuate(67,frames.quiz_main.document.domanda.score68,frames.quiz_main.document.domanda.risposta68);
      StoreAnswer(67);    }
-   location.href="Rheumatology Doctorate MCQ 1Q69.htm" }
- if (currPage==68) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q69.htm" }
+ if (frames.quiz_main.currPage==68) {
    if (valid[68]==0) {
-     allAnsReport[68] = new initValuate69();
-     doValuate(68,document.domanda.score69,document.domanda.risposta69);
+     allAnsReport[68] = new frames.quiz_main.initValuate69();
+     doValuate(68,frames.quiz_main.document.domanda.score69,frames.quiz_main.document.domanda.risposta69);
      StoreAnswer(68);    }
-   location.href="Rheumatology Doctorate MCQ 1Q70.htm" }
- if (currPage==69) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q70.htm" }
+ if (frames.quiz_main.currPage==69) {
    if (valid[69]==0) {
-     allAnsReport[69] = new initValuate70();
-     doValuate(69,document.domanda.score70,document.domanda.risposta70);
+     allAnsReport[69] = new frames.quiz_main.initValuate70();
+     doValuate(69,frames.quiz_main.document.domanda.score70,frames.quiz_main.document.domanda.risposta70);
      StoreAnswer(69);    }
-   location.href="Rheumatology Doctorate MCQ 1Q71.htm" }
- if (currPage==70) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q71.htm" }
+ if (frames.quiz_main.currPage==70) {
    if (valid[70]==0) {
-     allAnsReport[70] = new initValuate71();
-     doValuate(70,document.domanda.score71,document.domanda.risposta71);
+     allAnsReport[70] = new frames.quiz_main.initValuate71();
+     doValuate(70,frames.quiz_main.document.domanda.score71,frames.quiz_main.document.domanda.risposta71);
      StoreAnswer(70);    }
-   location.href="Rheumatology Doctorate MCQ 1Q72.htm" }
- if (currPage==71) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q72.htm" }
+ if (frames.quiz_main.currPage==71) {
    if (valid[71]==0) {
-     allAnsReport[71] = new initValuate72();
-     doValuate(71,document.domanda.score72,document.domanda.risposta72);
+     allAnsReport[71] = new frames.quiz_main.initValuate72();
+     doValuate(71,frames.quiz_main.document.domanda.score72,frames.quiz_main.document.domanda.risposta72);
      StoreAnswer(71);    }
-   location.href="Rheumatology Doctorate MCQ 1Q73.htm" }
- if (currPage==72) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q73.htm" }
+ if (frames.quiz_main.currPage==72) {
    if (valid[72]==0) {
-     allAnsReport[72] = new initValuate73();
-     doValuate(72,document.domanda.score73,document.domanda.risposta73);
+     allAnsReport[72] = new frames.quiz_main.initValuate73();
+     doValuate(72,frames.quiz_main.document.domanda.score73,frames.quiz_main.document.domanda.risposta73);
      StoreAnswer(72);    }
-   location.href="Rheumatology Doctorate MCQ 1Q74.htm" }
- if (currPage==73) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q74.htm" }
+ if (frames.quiz_main.currPage==73) {
    if (valid[73]==0) {
-     allAnsReport[73] = new initValuate74();
-     doValuate(73,document.domanda.score74,document.domanda.risposta74);
+     allAnsReport[73] = new frames.quiz_main.initValuate74();
+     doValuate(73,frames.quiz_main.document.domanda.score74,frames.quiz_main.document.domanda.risposta74);
      StoreAnswer(73);    }
-   location.href="Rheumatology Doctorate MCQ 1Q75.htm" }
- if (currPage==74) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q75.htm" }
+ if (frames.quiz_main.currPage==74) {
    if (valid[74]==0) {
-     allAnsReport[74] = new initValuate75();
-     doValuate(74,document.domanda.score75,document.domanda.risposta75);
+     allAnsReport[74] = new frames.quiz_main.initValuate75();
+     doValuate(74,frames.quiz_main.document.domanda.score75,frames.quiz_main.document.domanda.risposta75);
      StoreAnswer(74);    }
-   location.href="Rheumatology Doctorate MCQ 1Q76.htm" }
- if (currPage==75) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q76.htm" }
+ if (frames.quiz_main.currPage==75) {
    if (valid[75]==0) {
-     allAnsReport[75] = new initValuate76();
-     doValuate(75,document.domanda.score76,document.domanda.risposta76);
+     allAnsReport[75] = new frames.quiz_main.initValuate76();
+     doValuate(75,frames.quiz_main.document.domanda.score76,frames.quiz_main.document.domanda.risposta76);
      StoreAnswer(75);    }
-   location.href="Rheumatology Doctorate MCQ 1Q77.htm" }
- if (currPage==76) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q77.htm" }
+ if (frames.quiz_main.currPage==76) {
    if (valid[76]==0) {
-     allAnsReport[76] = new initValuate77();
-     doValuate(76,document.domanda.score77,document.domanda.risposta77);
+     allAnsReport[76] = new frames.quiz_main.initValuate77();
+     doValuate(76,frames.quiz_main.document.domanda.score77,frames.quiz_main.document.domanda.risposta77);
      StoreAnswer(76);    }
-   location.href="Rheumatology Doctorate MCQ 1Q78.htm" }
- if (currPage==77) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q78.htm" }
+ if (frames.quiz_main.currPage==77) {
    if (valid[77]==0) {
-     allAnsReport[77] = new initValuate78();
-     doValuate(77,document.domanda.score78,document.domanda.risposta78);
+     allAnsReport[77] = new frames.quiz_main.initValuate78();
+     doValuate(77,frames.quiz_main.document.domanda.score78,frames.quiz_main.document.domanda.risposta78);
      StoreAnswer(77);    }
-   location.href="Rheumatology Doctorate MCQ 1Q79.htm" }
- if (currPage==78) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q79.htm" }
+ if (frames.quiz_main.currPage==78) {
    if (valid[78]==0) {
-     allAnsReport[78] = new initValuate79();
-     doValuate(78,document.domanda.score79,document.domanda.risposta79);
+     allAnsReport[78] = new frames.quiz_main.initValuate79();
+     doValuate(78,frames.quiz_main.document.domanda.score79,frames.quiz_main.document.domanda.risposta79);
      StoreAnswer(78);    }
-   location.href="Rheumatology Doctorate MCQ 1Q80.htm" }
- if (currPage==79) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q80.htm" }
+ if (frames.quiz_main.currPage==79) {
    if (valid[79]==0) {
-     allAnsReport[79] = new initValuate80();
-     doValuate(79,document.domanda.score80,document.domanda.risposta80);
+     allAnsReport[79] = new frames.quiz_main.initValuate80();
+     doValuate(79,frames.quiz_main.document.domanda.score80,frames.quiz_main.document.domanda.risposta80);
      StoreAnswer(79);    }
-   location.href="Rheumatology Doctorate MCQ 1Q81.htm" }
- if (currPage==80) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q81.htm" }
+ if (frames.quiz_main.currPage==80) {
    if (valid[80]==0) {
-     allAnsReport[80] = new initValuate81();
-     doValuate(80,document.domanda.score81,document.domanda.risposta81);
+     allAnsReport[80] = new frames.quiz_main.initValuate81();
+     doValuate(80,frames.quiz_main.document.domanda.score81,frames.quiz_main.document.domanda.risposta81);
      StoreAnswer(80);    }
-   location.href="Rheumatology Doctorate MCQ 1Q82.htm" }
- if (currPage==81) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q82.htm" }
+ if (frames.quiz_main.currPage==81) {
    if (valid[81]==0) {
-     allAnsReport[81] = new initValuate82();
-     doValuate(81,document.domanda.score82,document.domanda.risposta82);
+     allAnsReport[81] = new frames.quiz_main.initValuate82();
+     doValuate(81,frames.quiz_main.document.domanda.score82,frames.quiz_main.document.domanda.risposta82);
      StoreAnswer(81);    }
-   location.href="Rheumatology Doctorate MCQ 1Q83.htm" }
- if (currPage==82) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q83.htm" }
+ if (frames.quiz_main.currPage==82) {
    if (valid[82]==0) {
-     allAnsReport[82] = new initValuate83();
-     doValuate(82,document.domanda.score83,document.domanda.risposta83);
+     allAnsReport[82] = new frames.quiz_main.initValuate83();
+     doValuate(82,frames.quiz_main.document.domanda.score83,frames.quiz_main.document.domanda.risposta83);
      StoreAnswer(82);    }
-   location.href="Rheumatology Doctorate MCQ 1Q84.htm" }
- if (currPage==83) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q84.htm" }
+ if (frames.quiz_main.currPage==83) {
    if (valid[83]==0) {
-     allAnsReport[83] = new initValuate84();
-     doValuate(83,document.domanda.score84,document.domanda.risposta84);
+     allAnsReport[83] = new frames.quiz_main.initValuate84();
+     doValuate(83,frames.quiz_main.document.domanda.score84,frames.quiz_main.document.domanda.risposta84);
      StoreAnswer(83);    }
-   location.href="Rheumatology Doctorate MCQ 1Q85.htm" }
- if (currPage==84) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q85.htm" }
+ if (frames.quiz_main.currPage==84) {
    if (valid[84]==0) {
-     allAnsReport[84] = new initValuate85();
-     doValuate(84,document.domanda.score85,document.domanda.risposta85);
+     allAnsReport[84] = new frames.quiz_main.initValuate85();
+     doValuate(84,frames.quiz_main.document.domanda.score85,frames.quiz_main.document.domanda.risposta85);
      StoreAnswer(84);    }
-   location.href="Rheumatology Doctorate MCQ 1Q86.htm" }
- if (currPage==85) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q86.htm" }
+ if (frames.quiz_main.currPage==85) {
    if (valid[85]==0) {
-     allAnsReport[85] = new initValuate86();
-     doValuate(85,document.domanda.score86,document.domanda.risposta86);
+     allAnsReport[85] = new frames.quiz_main.initValuate86();
+     doValuate(85,frames.quiz_main.document.domanda.score86,frames.quiz_main.document.domanda.risposta86);
      StoreAnswer(85);    }
-   location.href="Rheumatology Doctorate MCQ 1Q87.htm" }
- if (currPage==86) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q87.htm" }
+ if (frames.quiz_main.currPage==86) {
    if (valid[86]==0) {
-     allAnsReport[86] = new initValuate87();
-     doValuate(86,document.domanda.score87,document.domanda.risposta87);
+     allAnsReport[86] = new frames.quiz_main.initValuate87();
+     doValuate(86,frames.quiz_main.document.domanda.score87,frames.quiz_main.document.domanda.risposta87);
      StoreAnswer(86);    }
-   location.href="Rheumatology Doctorate MCQ 1Q88.htm" }
- if (currPage==87) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q88.htm" }
+ if (frames.quiz_main.currPage==87) {
    if (valid[87]==0) {
-     allAnsReport[87] = new initValuate88();
-     doValuate(87,document.domanda.score88,document.domanda.risposta88);
+     allAnsReport[87] = new frames.quiz_main.initValuate88();
+     doValuate(87,frames.quiz_main.document.domanda.score88,frames.quiz_main.document.domanda.risposta88);
      StoreAnswer(87);    }
-   location.href="Rheumatology Doctorate MCQ 1Q89.htm" }
- if (currPage==88) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q89.htm" }
+ if (frames.quiz_main.currPage==88) {
    if (valid[88]==0) {
-     allAnsReport[88] = new initValuate89();
-     doValuate(88,document.domanda.score89,document.domanda.risposta89);
+     allAnsReport[88] = new frames.quiz_main.initValuate89();
+     doValuate(88,frames.quiz_main.document.domanda.score89,frames.quiz_main.document.domanda.risposta89);
      StoreAnswer(88);    }
-   location.href="Rheumatology Doctorate MCQ 1Q90.htm" }
- if (currPage==89) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q90.htm" }
+ if (frames.quiz_main.currPage==89) {
    if (valid[89]==0) {
-     allAnsReport[89] = new initValuate90();
-     doValuate(89,document.domanda.score90,document.domanda.risposta90);
+     allAnsReport[89] = new frames.quiz_main.initValuate90();
+     doValuate(89,frames.quiz_main.document.domanda.score90,frames.quiz_main.document.domanda.risposta90);
      StoreAnswer(89);    }
-   location.href="Rheumatology Doctorate MCQ 1Q91.htm" }
- if (currPage==90) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q91.htm" }
+ if (frames.quiz_main.currPage==90) {
    if (valid[90]==0) {
-     allAnsReport[90] = new initValuate91();
-     doValuate(90,document.domanda.score91,document.domanda.risposta91);
+     allAnsReport[90] = new frames.quiz_main.initValuate91();
+     doValuate(90,frames.quiz_main.document.domanda.score91,frames.quiz_main.document.domanda.risposta91);
      StoreAnswer(90);    }
-   location.href="Rheumatology Doctorate MCQ 1Q92.htm" }
- if (currPage==91) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q92.htm" }
+ if (frames.quiz_main.currPage==91) {
    if (valid[91]==0) {
-     allAnsReport[91] = new initValuate92();
-     doValuate(91,document.domanda.score92,document.domanda.risposta92);
+     allAnsReport[91] = new frames.quiz_main.initValuate92();
+     doValuate(91,frames.quiz_main.document.domanda.score92,frames.quiz_main.document.domanda.risposta92);
      StoreAnswer(91);    }
-   location.href="Rheumatology Doctorate MCQ 1Q93.htm" }
- if (currPage==92) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q93.htm" }
+ if (frames.quiz_main.currPage==92) {
    if (valid[92]==0) {
-     allAnsReport[92] = new initValuate93();
-     doValuate(92,document.domanda.score93,document.domanda.risposta93);
+     allAnsReport[92] = new frames.quiz_main.initValuate93();
+     doValuate(92,frames.quiz_main.document.domanda.score93,frames.quiz_main.document.domanda.risposta93);
      StoreAnswer(92);    }
-   location.href="Rheumatology Doctorate MCQ 1Q94.htm" }
- if (currPage==93) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q94.htm" }
+ if (frames.quiz_main.currPage==93) {
    if (valid[93]==0) {
-     allAnsReport[93] = new initValuate94();
-     doValuate(93,document.domanda.score94,document.domanda.risposta94);
+     allAnsReport[93] = new frames.quiz_main.initValuate94();
+     doValuate(93,frames.quiz_main.document.domanda.score94,frames.quiz_main.document.domanda.risposta94);
      StoreAnswer(93);    }
-   location.href="Rheumatology Doctorate MCQ 1Q95.htm" }
- if (currPage==94) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q95.htm" }
+ if (frames.quiz_main.currPage==94) {
    if (valid[94]==0) {
-     allAnsReport[94] = new initValuate95();
-     doValuate(94,document.domanda.score95,document.domanda.risposta95);
+     allAnsReport[94] = new frames.quiz_main.initValuate95();
+     doValuate(94,frames.quiz_main.document.domanda.score95,frames.quiz_main.document.domanda.risposta95);
      StoreAnswer(94);    }
-   location.href="Rheumatology Doctorate MCQ 1Q96.htm" }
- if (currPage==95) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q96.htm" }
+ if (frames.quiz_main.currPage==95) {
    if (valid[95]==0) {
-     allAnsReport[95] = new initValuate96();
-     doValuate(95,document.domanda.score96,document.domanda.risposta96);
+     allAnsReport[95] = new frames.quiz_main.initValuate96();
+     doValuate(95,frames.quiz_main.document.domanda.score96,frames.quiz_main.document.domanda.risposta96);
      StoreAnswer(95);    }
-   location.href="Rheumatology Doctorate MCQ 1Q97.htm" }
- if (currPage==96) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q97.htm" }
+ if (frames.quiz_main.currPage==96) {
    if (valid[96]==0) {
-     allAnsReport[96] = new initValuate97();
-     doValuate(96,document.domanda.score97,document.domanda.risposta97);
+     allAnsReport[96] = new frames.quiz_main.initValuate97();
+     doValuate(96,frames.quiz_main.document.domanda.score97,frames.quiz_main.document.domanda.risposta97);
      StoreAnswer(96);    }
-   location.href="Rheumatology Doctorate MCQ 1Q98.htm" }
- if (currPage==97) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q98.htm" }
+ if (frames.quiz_main.currPage==97) {
    if (valid[97]==0) {
-     allAnsReport[97] = new initValuate98();
-     doValuate(97,document.domanda.score98,document.domanda.risposta98);
+     allAnsReport[97] = new frames.quiz_main.initValuate98();
+     doValuate(97,frames.quiz_main.document.domanda.score98,frames.quiz_main.document.domanda.risposta98);
      StoreAnswer(97);    }
-   location.href="Rheumatology Doctorate MCQ 1Q99.htm" }
- if (currPage==98) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q99.htm" }
+ if (frames.quiz_main.currPage==98) {
    if (valid[98]==0) {
-     allAnsReport[98] = new initValuate99();
-     doValuate(98,document.domanda.score99,document.domanda.risposta99);
+     allAnsReport[98] = new frames.quiz_main.initValuate99();
+     doValuate(98,frames.quiz_main.document.domanda.score99,frames.quiz_main.document.domanda.risposta99);
      StoreAnswer(98);    }
-   location.href="Rheumatology Doctorate MCQ 1Q100.htm" }
- if (currPage==99) {
+   frames.quiz_main.location.href="Rheumatology Doctorate MCQ 1Q100.htm" }
+ if (frames.quiz_main.currPage==99) {
    if (valid[99]==0) {
-     allAnsReport[99] = new initValuate100();
-     doValuate(99,document.domanda.score100,document.domanda.risposta100);
+     allAnsReport[99] = new frames.quiz_main.initValuate100();
+     doValuate(99,frames.quiz_main.document.domanda.score100,frames.quiz_main.document.domanda.risposta100);
      StoreAnswer(99);    }
    FinalActions();
  }
@@ -3158,8 +3165,6 @@ function EndQuiz() {
 
 function FinalActions() {
  voto = ComputeMarks();
- cnewdt = new Date();
- time   = Math.floor(cnewdt.getTime()/1000);
  PrintResults();
 }
 function PrintTrueOrFalse(documento,flag) {

@@ -7,9 +7,8 @@
 <META name="keywords" content="quiz">
 <META name="description" content="Rheumatology NEET SS mock test 1">
 <TITLE>Quiz</TITLE>
-<LINK href="css/Rheumatology Doctorate MCQ 1.css" rel="stylesheet" type="text/css">
+<LINK href="css/Rheumatology Doctorate MCQ 11.css" rel="stylesheet" type="text/css">
 <link href="css/base.css" rel="stylesheet"/>
-<SCRIPT LANGUAGE='JavaScript' SRC='./Rheumatology Doctorate MCQ 1.js'></SCRIPT>
 <link href="css/modalDlg.css" rel="stylesheet"/>
 <link href="css/progressbar.css" rel="stylesheet" />
 <script src="js/progressbar.min.js" type="text/javascript"></script>
@@ -24,7 +23,7 @@ function InitProgressBar()
 }
 function GoNextQuestion()
 {
-  if (valid[25]==0) {
+  if (parent.valid[25]==0) {
     if (window.confirm('Confirm your answer ?')) {
       if (Domanda26()) return 1;
     }
@@ -32,15 +31,10 @@ function GoNextQuestion()
   return 0;
 }
 function EndTestSkip() {
-Constructor();
-RetrieveAllAnswer();
-startFloatLayer();
-RetrieveStatusBar();
-RestartTimer();
-if (end_test==1) {
- if (valid[25]==0) {
-   allAnsReport[25] = new initValuate26();
-   doValuate(25,document.domanda.score26,document.domanda.risposta26);
+if (parent.end_test==1) {
+ if (parent.valid[25]==0) {
+   parent.allAnsReport[25] = new initValuate26();
+   parent.doValuate(25,document.domanda.score26,document.domanda.risposta26);
    location.href = "Rheumatology Doctorate MCQ 1Q27.htm";
  }
  }
@@ -50,30 +44,18 @@ function ManageLoadPage()
 EndTestSkip();}
 </script>
 </HEAD>
-<BODY OnLoad="ManageLoadPage()"  Onunload="StoreStatusBar()">
+<BODY OnLoad="ManageLoadPage()" >
 <div style="width:65%; margin:0 auto;">
 <script language="javascript" type="text/javascript">
-  keyword = "E25#s9iAOsz";
+  parent.keyword = "pCQMrMjO";
 </script>
-  <form class="hidden_style"><input type="hidden" id="hidden_url" value="css/Rheumatology Doctorate MCQ 1.css"></form>
+  <form class="hidden_style"><input type="hidden" id="hidden_url" value="css/Rheumatology Doctorate MCQ 11.css"></form>
 <CENTER>
 <SPAN class='quiz_title_class'>Rheumatology NEET SS mock test 1</SPAN><BR>
 </CENTER>
 <HR class='horizontal-bar'>
 <FORM NAME='domanda'>
 
-<TABLE id='FloatingStatusbarPanel' width='95%' style='position:absolute; left:100px; top:-100px; z-index:2;'>
-<TR>
-<TD ALIGN='left' ID='clock' CLASS='floating_statusbar_class'>01:00:00</TD>
-<TD ALIGN='center' CLASS='floating_statusbar_class'>
-correct :<SPAN ID='nRight'>0</SPAN>
-</TD><TD ALIGN='center' CLASS='floating_statusbar_class'>
-wrong :<SPAN ID='nWrong'>0</SPAN>
-</TD><TD ALIGN='center' CLASS='floating_statusbar_class'>
-to be answered :<SPAN ID='nToDo'>100</SPAN>
-</TD></TR></TABLE>
-
-<div id='retire_btn_div'><img alt='Retire' title='Retire' id='retire_btn_img' src='media/btn-close-x.png' OnClick='Retire()'></div>
 <script language="javascript" type="text/javascript">
 function initValuate26()
 {
@@ -82,37 +64,33 @@ function initValuate26()
  if (document.domanda.radio026000.checked==true) choice=1; else choice=0;
  answer = "";
  remark = "";
- valuation = DecodeNumber('/5tRK9kzo+Y=',778,-1,1);
- this[0] = new AnsReport(choice,valuation,remark,0,answer);
+ valuation = parent.DecodeNumber('/YhwE4TPSlw=',404,-1,1);
+ this[0] = new parent.AnsReport(choice,valuation,remark,0,answer);
  if (document.domanda.radio026001.checked==true) choice=1; else choice=0;
  answer = "";
  remark = "";
- valuation = DecodeNumber('G+DOoc6ZG0c=',791,-1,1);
- this[1] = new AnsReport(choice,valuation,remark,0,answer);
+ valuation = parent.DecodeNumber('oUE5kGK8aYM=',417,-1,1);
+ this[1] = new parent.AnsReport(choice,valuation,remark,0,answer);
  if (document.domanda.radio026002.checked==true) choice=1; else choice=0;
  answer = "";
  remark = "";
- valuation = DecodeNumber('JX3KGN2rIBU=',804,-1,1);
- this[2] = new AnsReport(choice,valuation,remark,0,answer);
+ valuation = parent.DecodeNumber('oWw5At/1SFk=',430,-1,1);
+ this[2] = new parent.AnsReport(choice,valuation,remark,0,answer);
  if (document.domanda.radio026003.checked==true) choice=1; else choice=0;
  answer = "";
  remark = "";
- valuation = DecodeNumber('HZV8WKgoY3c=',817,-1,1);
- this[3] = new AnsReport(choice,valuation,remark,0,answer);
- pesi[25]=DecodeNumber('QNUwBp+U14A=',820,0,99999);
+ valuation = parent.DecodeNumber('JnhYTbaq4i8=',443,-1,1);
+ this[3] = new parent.AnsReport(choice,valuation,remark,0,answer);
+ parent.pesi[25]=parent.DecodeNumber('dX0ClVabgI8=',446,0,99999);
 
 }
 
 function Domanda26()
 {
- if ((document.domanda.radio026000.checked==false) && (document.domanda.radio026001.checked==false) && (document.domanda.radio026002.checked==false) && (document.domanda.radio026003.checked==false) )
- { IncompletedQuest(1); return 0; }
- RetrieveAllAnswer();
- if (valid[25]!=0) { DoneBefore(); return; }
- allAnsReport[25] = new initValuate26();
- doValuate(25);
- StoreAnswer(25);
- PrintAnswer(25,25);
+ if (parent.valid[25]!=0) { parent.DoneBefore(); return; }
+ parent.allAnsReport[25] = new initValuate26();
+ parent.doValuate(25);
+ parent.PrintAnswer(25,25);
  return 1;
 }
 
@@ -135,30 +113,32 @@ Follicular dendritic cells</TD></TR></TABLE>
 <TABLE WIDTH='100%'>
 <TR>
 <TD ALIGN='CENTER' class="quiz_letter_class"  WIDTH='50'>
-<SPAN class='quiz_letter_class'> A </SPAN><INPUT TYPE='radio' NAME='radio026000'  OnClick=" document.domanda.radio026001.checked=0; document.domanda.radio026002.checked=0; document.domanda.radio026003.checked=0;Domanda26()" ></TD>
+<SPAN class='quiz_letter_class'> A </SPAN><INPUT TYPE='radio' NAME='radio026000'  OnClick=" document.domanda.radio026001.checked=0; document.domanda.radio026002.checked=0; document.domanda.radio026003.checked=0;" ></TD>
 <TD ALIGN='LEFT' class="quiz_answer_class">
 Can bind immune complexes</TD>
 </TR>
 <TR>
 <TD ALIGN='CENTER' class="quiz_letter_class"  WIDTH='50'>
-<SPAN class='quiz_letter_class'> B </SPAN><INPUT TYPE='radio' NAME='radio026001'  OnClick=" document.domanda.radio026000.checked=0; document.domanda.radio026002.checked=0; document.domanda.radio026003.checked=0;Domanda26()" ></TD>
+<SPAN class='quiz_letter_class'> B </SPAN><INPUT TYPE='radio' NAME='radio026001'  OnClick=" document.domanda.radio026000.checked=0; document.domanda.radio026002.checked=0; document.domanda.radio026003.checked=0;" ></TD>
 <TD ALIGN='LEFT' class="quiz_answer_class">
 Are small round cells</TD>
 </TR>
 <TR>
 <TD ALIGN='CENTER' class="quiz_letter_class"  WIDTH='50'>
-<SPAN class='quiz_letter_class'> C </SPAN><INPUT TYPE='radio' NAME='radio026002'  OnClick=" document.domanda.radio026000.checked=0; document.domanda.radio026001.checked=0; document.domanda.radio026003.checked=0;Domanda26()" ></TD>
+<SPAN class='quiz_letter_class'> C </SPAN><INPUT TYPE='radio' NAME='radio026002'  OnClick=" document.domanda.radio026000.checked=0; document.domanda.radio026001.checked=0; document.domanda.radio026003.checked=0;" ></TD>
 <TD ALIGN='LEFT' class="quiz_answer_class">
 Retain antigen for up to 24 h</TD>
 </TR>
 <TR>
 <TD ALIGN='CENTER' class="quiz_letter_class"  WIDTH='50'>
-<SPAN class='quiz_letter_class'> D </SPAN><INPUT TYPE='radio' NAME='radio026003'  OnClick=" document.domanda.radio026000.checked=0; document.domanda.radio026001.checked=0; document.domanda.radio026002.checked=0;Domanda26()" ></TD>
+<SPAN class='quiz_letter_class'> D </SPAN><INPUT TYPE='radio' NAME='radio026003'  OnClick=" document.domanda.radio026000.checked=0; document.domanda.radio026001.checked=0; document.domanda.radio026002.checked=0;" ></TD>
 <TD ALIGN='LEFT' class="quiz_answer_class">
 Possess Fc receptors but lack C3b receptors</TD>
 </TR>
 </TABLE>
-<SPAN id='okButtonId25' class='okButtonClass'></SPAN><div style='width:100%; position: fixed; height:50px; background-color:#E0E0E0; padding:0px; bottom:50px; right:0px;'>
+<P><CENTER>
+</CENTER>
+<div style='width:100%; position: fixed; height:50px; background-color:#E0E0E0; padding:0px; bottom:0px; right:0px;'>
 <TABLE WIDTH='100%'>
 <TR>
 <TD ALIGN='LEFT' WIDTH='25%'>

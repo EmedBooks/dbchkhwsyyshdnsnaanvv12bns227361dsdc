@@ -7,9 +7,8 @@
 <META name="keywords" content="quiz">
 <META name="description" content="Rheumatology NEET SS mock test 1">
 <TITLE>Quiz</TITLE>
-<LINK href="css/Rheumatology Doctorate MCQ 1.css" rel="stylesheet" type="text/css">
+<LINK href="css/Rheumatology Doctorate MCQ 11.css" rel="stylesheet" type="text/css">
 <link href="css/base.css" rel="stylesheet"/>
-<SCRIPT LANGUAGE='JavaScript' SRC='./Rheumatology Doctorate MCQ 1.js'></SCRIPT>
 <link href="css/modalDlg.css" rel="stylesheet"/>
 <link href="css/progressbar.css" rel="stylesheet" />
 <script src="js/progressbar.min.js" type="text/javascript"></script>
@@ -24,7 +23,7 @@ function InitProgressBar()
 }
 function GoNextQuestion()
 {
-  if (valid[39]==0) {
+  if (parent.valid[39]==0) {
     if (window.confirm('Confirm your answer ?')) {
       if (Domanda40()) return 1;
     }
@@ -32,15 +31,10 @@ function GoNextQuestion()
   return 0;
 }
 function EndTestSkip() {
-Constructor();
-RetrieveAllAnswer();
-startFloatLayer();
-RetrieveStatusBar();
-RestartTimer();
-if (end_test==1) {
- if (valid[39]==0) {
-   allAnsReport[39] = new initValuate40();
-   doValuate(39,document.domanda.score40,document.domanda.risposta40);
+if (parent.end_test==1) {
+ if (parent.valid[39]==0) {
+   parent.allAnsReport[39] = new initValuate40();
+   parent.doValuate(39,document.domanda.score40,document.domanda.risposta40);
    location.href = "Rheumatology Doctorate MCQ 1Q41.htm";
  }
  }
@@ -50,30 +44,18 @@ function ManageLoadPage()
 EndTestSkip();}
 </script>
 </HEAD>
-<BODY OnLoad="ManageLoadPage()"  Onunload="StoreStatusBar()">
+<BODY OnLoad="ManageLoadPage()" >
 <div style="width:65%; margin:0 auto;">
 <script language="javascript" type="text/javascript">
-  keyword = "E25#s9iAOsz";
+  parent.keyword = "pCQMrMjO";
 </script>
-  <form class="hidden_style"><input type="hidden" id="hidden_url" value="css/Rheumatology Doctorate MCQ 1.css"></form>
+  <form class="hidden_style"><input type="hidden" id="hidden_url" value="css/Rheumatology Doctorate MCQ 11.css"></form>
 <CENTER>
 <SPAN class='quiz_title_class'>Rheumatology NEET SS mock test 1</SPAN><BR>
 </CENTER>
 <HR class='horizontal-bar'>
 <FORM NAME='domanda'>
 
-<TABLE id='FloatingStatusbarPanel' width='95%' style='position:absolute; left:100px; top:-100px; z-index:2;'>
-<TR>
-<TD ALIGN='left' ID='clock' CLASS='floating_statusbar_class'>01:00:00</TD>
-<TD ALIGN='center' CLASS='floating_statusbar_class'>
-correct :<SPAN ID='nRight'>0</SPAN>
-</TD><TD ALIGN='center' CLASS='floating_statusbar_class'>
-wrong :<SPAN ID='nWrong'>0</SPAN>
-</TD><TD ALIGN='center' CLASS='floating_statusbar_class'>
-to be answered :<SPAN ID='nToDo'>100</SPAN>
-</TD></TR></TABLE>
-
-<div id='retire_btn_div'><img alt='Retire' title='Retire' id='retire_btn_img' src='media/btn-close-x.png' OnClick='Retire()'></div>
 <script language="javascript" type="text/javascript">
 function initValuate40()
 {
@@ -82,37 +64,33 @@ function initValuate40()
  if (document.domanda.radio040000.checked==true) choice=1; else choice=0;
  answer = "";
  remark = "";
- valuation = DecodeNumber('fsnt0IybLpc=',753,-1,1);
- this[0] = new AnsReport(choice,valuation,remark,0,answer);
+ valuation = parent.DecodeNumber('kBs0WOrPftY=',1383,-1,1);
+ this[0] = new parent.AnsReport(choice,valuation,remark,0,answer);
  if (document.domanda.radio040001.checked==true) choice=1; else choice=0;
  answer = "";
  remark = "";
- valuation = DecodeNumber('DIr6fVJ/RXc=',766,-1,1);
- this[1] = new AnsReport(choice,valuation,remark,0,answer);
+ valuation = parent.DecodeNumber('LBpMzW81m3o=',1396,-1,1);
+ this[1] = new parent.AnsReport(choice,valuation,remark,0,answer);
  if (document.domanda.radio040002.checked==true) choice=1; else choice=0;
  answer = "";
  remark = "";
- valuation = DecodeNumber('Lm5E72ky9OA=',779,-1,1);
- this[2] = new AnsReport(choice,valuation,remark,0,answer);
+ valuation = parent.DecodeNumber('6fFc9Yg8YYg=',409,-1,1);
+ this[2] = new parent.AnsReport(choice,valuation,remark,0,answer);
  if (document.domanda.radio040003.checked==true) choice=1; else choice=0;
  answer = "";
  remark = "";
- valuation = DecodeNumber('h1oBwbWTLPQ=',792,-1,1);
- this[3] = new AnsReport(choice,valuation,remark,0,answer);
- pesi[39]=DecodeNumber('p2Hx3YtOqyc=',795,0,99999);
+ valuation = parent.DecodeNumber('3HcqqCigjss=',422,-1,1);
+ this[3] = new parent.AnsReport(choice,valuation,remark,0,answer);
+ parent.pesi[39]=parent.DecodeNumber('ud9ZFK0W4QQ=',425,0,99999);
 
 }
 
 function Domanda40()
 {
- if ((document.domanda.radio040000.checked==false) && (document.domanda.radio040001.checked==false) && (document.domanda.radio040002.checked==false) && (document.domanda.radio040003.checked==false) )
- { IncompletedQuest(1); return 0; }
- RetrieveAllAnswer();
- if (valid[39]!=0) { DoneBefore(); return; }
- allAnsReport[39] = new initValuate40();
- doValuate(39);
- StoreAnswer(39);
- PrintAnswer(39,39);
+ if (parent.valid[39]!=0) { parent.DoneBefore(); return; }
+ parent.allAnsReport[39] = new initValuate40();
+ parent.doValuate(39);
+ parent.PrintAnswer(39,39);
  return 1;
 }
 
@@ -135,30 +113,32 @@ Lipopolysaccharide (LPS) from Gram-negative bacteria is</TD></TR></TABLE>
 <TABLE WIDTH='100%'>
 <TR>
 <TD ALIGN='CENTER' class="quiz_letter_class"  WIDTH='50'>
-<SPAN class='quiz_letter_class'> A </SPAN><INPUT TYPE='radio' NAME='radio040000'  OnClick=" document.domanda.radio040001.checked=0; document.domanda.radio040002.checked=0; document.domanda.radio040003.checked=0;Domanda40()" ></TD>
+<SPAN class='quiz_letter_class'> A </SPAN><INPUT TYPE='radio' NAME='radio040000'  OnClick=" document.domanda.radio040001.checked=0; document.domanda.radio040002.checked=0; document.domanda.radio040003.checked=0;" ></TD>
 <TD ALIGN='LEFT' class="quiz_answer_class">
 A thymus-dependent antigen</TD>
 </TR>
 <TR>
 <TD ALIGN='CENTER' class="quiz_letter_class"  WIDTH='50'>
-<SPAN class='quiz_letter_class'> B </SPAN><INPUT TYPE='radio' NAME='radio040001'  OnClick=" document.domanda.radio040000.checked=0; document.domanda.radio040002.checked=0; document.domanda.radio040003.checked=0;Domanda40()" ></TD>
+<SPAN class='quiz_letter_class'> B </SPAN><INPUT TYPE='radio' NAME='radio040001'  OnClick=" document.domanda.radio040000.checked=0; document.domanda.radio040002.checked=0; document.domanda.radio040003.checked=0;" ></TD>
 <TD ALIGN='LEFT' class="quiz_answer_class">
 A type 2 thymus-independent antigen</TD>
 </TR>
 <TR>
 <TD ALIGN='CENTER' class="quiz_letter_class"  WIDTH='50'>
-<SPAN class='quiz_letter_class'> C </SPAN><INPUT TYPE='radio' NAME='radio040002'  OnClick=" document.domanda.radio040000.checked=0; document.domanda.radio040001.checked=0; document.domanda.radio040003.checked=0;Domanda40()" ></TD>
+<SPAN class='quiz_letter_class'> C </SPAN><INPUT TYPE='radio' NAME='radio040002'  OnClick=" document.domanda.radio040000.checked=0; document.domanda.radio040001.checked=0; document.domanda.radio040003.checked=0;" ></TD>
 <TD ALIGN='LEFT' class="quiz_answer_class">
 A polyclonal activator of murine B-cells</TD>
 </TR>
 <TR>
 <TD ALIGN='CENTER' class="quiz_letter_class"  WIDTH='50'>
-<SPAN class='quiz_letter_class'> D </SPAN><INPUT TYPE='radio' NAME='radio040003'  OnClick=" document.domanda.radio040000.checked=0; document.domanda.radio040001.checked=0; document.domanda.radio040002.checked=0;Domanda40()" ></TD>
+<SPAN class='quiz_letter_class'> D </SPAN><INPUT TYPE='radio' NAME='radio040003'  OnClick=" document.domanda.radio040000.checked=0; document.domanda.radio040001.checked=0; document.domanda.radio040002.checked=0;" ></TD>
 <TD ALIGN='LEFT' class="quiz_answer_class">
 Produces high affinity IgG memory responses</TD>
 </TR>
 </TABLE>
-<SPAN id='okButtonId39' class='okButtonClass'></SPAN><div style='width:100%; position: fixed; height:50px; background-color:#E0E0E0; padding:0px; bottom:50px; right:0px;'>
+<P><CENTER>
+</CENTER>
+<div style='width:100%; position: fixed; height:50px; background-color:#E0E0E0; padding:0px; bottom:0px; right:0px;'>
 <TABLE WIDTH='100%'>
 <TR>
 <TD ALIGN='LEFT' WIDTH='25%'>
