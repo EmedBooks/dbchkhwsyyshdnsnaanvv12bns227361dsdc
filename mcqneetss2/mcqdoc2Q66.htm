@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=Windows-1252">
+<META name="Author" content="Produced using QuizFaber 3.1.2">
+<META name="generator" content="QuizFaber 3.1.2">
+<META name="keywords" content="quiz">
+<META name="description" content="MCQ - Approach to rheumatic diseases">
+<TITLE>Quiz</TITLE>
+<LINK href="css/mcqdoc21.css" rel="stylesheet" type="text/css">
+<link href="css/base.css" rel="stylesheet"/>
+<link href="css/modalDlg.css" rel="stylesheet"/>
+<link href="css/progressbar.css" rel="stylesheet" />
+<script src="js/progressbar.min.js" type="text/javascript"></script>
+
+<script language="javascript" type="text/javascript">
+ var currPage = 65;
+var progressBar;
+function InitProgressBar()
+{
+	progressBar = new ProgressBar("my-progressbar", {'width':'200px', 'height':'3px'});
+	progressBar.setPercent(100);
+}
+function GoNextQuestion()
+{
+  if (parent.valid[65]==0) {
+    if (window.confirm('Confirm your answer ?')) {
+      if (Domanda66()) return 1;
+    }
+  } else return 1;
+  return 0;
+}
+function EndTestSkip() {
+if (parent.end_test==1) {
+ if (parent.valid[65]==0) {
+   parent.allAnsReport[65] = new initValuate66();
+   parent.doValuate(65,document.domanda.score66,document.domanda.risposta66);
+   location.href = "mcqdoc2Q67.htm";
+ }
+ }
+}
+function ManageLoadPage()
+{
+EndTestSkip();}
+</script>
+</HEAD>
+<BODY OnLoad="ManageLoadPage()" >
+<div style="width:100%; margin:0 auto;">
+<script language="javascript" type="text/javascript">
+  parent.keyword = "uJjlU19xX$M";
+</script>
+  <form class="hidden_style"><input type="hidden" id="hidden_url" value="css/mcqdoc21.css"></form>
+<CENTER>
+<SPAN class='quiz_title_class'>MCQ - Approach to rheumatic diseases</SPAN><BR>
+</CENTER>
+<HR class='horizontal-bar'>
+<FORM NAME='domanda'>
+
+<script language="javascript" type="text/javascript">
+function initValuate66()
+{
+ this.length = 4;
+ var choice,valuation,remark,data,answer;
+ if (document.domanda.radio066000.checked==true) choice=1; else choice=0;
+ answer = "";
+ remark = "";
+ valuation = parent.DecodeNumber('OLP9SgQCDbE=',863,-1,1);
+ this[0] = new parent.AnsReport(choice,valuation,remark,0,answer);
+ if (document.domanda.radio066001.checked==true) choice=1; else choice=0;
+ answer = "";
+ remark = "";
+ valuation = parent.DecodeNumber('URArwhnjkaQ=',876,-1,1);
+ this[1] = new parent.AnsReport(choice,valuation,remark,0,answer);
+ if (document.domanda.radio066002.checked==true) choice=1; else choice=0;
+ answer = "";
+ remark = "";
+ valuation = parent.DecodeNumber('WMRyzSQ9wHA=',889,-1,1);
+ this[2] = new parent.AnsReport(choice,valuation,remark,0,answer);
+ if (document.domanda.radio066003.checked==true) choice=1; else choice=0;
+ answer = "";
+ remark = "";
+ valuation = parent.DecodeNumber('7qtlfOLinjY=',902,-1,1);
+ this[3] = new parent.AnsReport(choice,valuation,remark,0,answer);
+ parent.pesi[65]=parent.DecodeNumber('ml5xCrUEekU=',905,0,99999);
+
+}
+
+function Domanda66()
+{
+ if (parent.valid[65]!=0) { parent.DoneBefore(); return; }
+ parent.allAnsReport[65] = new initValuate66();
+ parent.doValuate(65);
+ parent.PrintAnswer(65,65);
+ return 1;
+}
+
+</script>
+<IMG SRC="media/check.png" CLASS='checkHide' ID='check65' ALIGN='LEFT' HSPACE='5'>
+<A NAME='qstAnchor65'>
+</A>
+<DIV class='quiz_quest_header_class'> Question 66 / 100 </DIV>
+
+<DIV ID='hideAns65' CLASS='cardHide'>
+<TABLE class="qst_feedback_table_class"><TR class="qst_feedback_TH_class"><TD CLASS="qst_feedback_TD_class">
+<SPAN ID='hideTxt65'></SPAN>
+</TD></TR></TABLE>
+</DIV>
+<BR />
+<TABLE WIDTH="100%">
+<TR><TD class="quiz_quest_class">
+Eye lesion unlikely to occur in relapsing polychondritis is</TD></TR></TABLE>
+<BR />
+<TABLE WIDTH='100%'>
+<TR>
+<TD ALIGN='CENTER' class="quiz_letter_class"  WIDTH='50'>
+<SPAN class='quiz_letter_class'> A </SPAN><INPUT TYPE='radio' NAME='radio066000'  OnClick=" document.domanda.radio066001.checked=0; document.domanda.radio066002.checked=0; document.domanda.radio066003.checked=0;" ></TD>
+<TD ALIGN='LEFT' class="quiz_answer_class">
+Heliotrope eyelids</TD>
+</TR>
+<TR>
+<TD ALIGN='CENTER' class="quiz_letter_class"  WIDTH='50'>
+<SPAN class='quiz_letter_class'> B </SPAN><INPUT TYPE='radio' NAME='radio066001'  OnClick=" document.domanda.radio066000.checked=0; document.domanda.radio066002.checked=0; document.domanda.radio066003.checked=0;" ></TD>
+<TD ALIGN='LEFT' class="quiz_answer_class">
+Scleritis</TD>
+</TR>
+<TR>
+<TD ALIGN='CENTER' class="quiz_letter_class"  WIDTH='50'>
+<SPAN class='quiz_letter_class'> C </SPAN><INPUT TYPE='radio' NAME='radio066002'  OnClick=" document.domanda.radio066000.checked=0; document.domanda.radio066001.checked=0; document.domanda.radio066003.checked=0;" ></TD>
+<TD ALIGN='LEFT' class="quiz_answer_class">
+Episcleritis</TD>
+</TR>
+<TR>
+<TD ALIGN='CENTER' class="quiz_letter_class"  WIDTH='50'>
+<SPAN class='quiz_letter_class'> D </SPAN><INPUT TYPE='radio' NAME='radio066003'  OnClick=" document.domanda.radio066000.checked=0; document.domanda.radio066001.checked=0; document.domanda.radio066002.checked=0;" ></TD>
+<TD ALIGN='LEFT' class="quiz_answer_class">
+Uveitis</TD>
+</TR>
+</TABLE>
+<P><CENTER>
+</CENTER>
+<div style='width:100%; position: fixed; height:50px; background-color:#E0E0E0; padding:0px; bottom:0px; right:0px;'>
+<TABLE WIDTH='100%'>
+<TR>
+<TD ALIGN='LEFT' WIDTH='25%'>
+</TD>
+<TD ALIGN='CENTER' WIDTH='50%'>
+</TD>
+<TD ALIGN='RIGHT' WIDTH='25%'>
+  <a href="#" onclick="Domanda66()" class="nextQst_btn_class">OK</a>
+  <a HREF="javascript:if (GoNextQuestion()) location.href='mcqdoc2Q67.htm'" class="nextQst_btn_class" id="nextBtnId">Question 67</a>
+</TR>
+</TABLE>
+</div>
+<BR /><BR />
+</FORM>
+</DIV>
+</BODY>
+</HTML>
